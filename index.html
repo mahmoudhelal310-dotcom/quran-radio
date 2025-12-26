@@ -113,7 +113,7 @@ button:active{
     <div id="fbNotice">
         🔊 إذا لم يعمل الصوت داخل فيسبوك  
         🌐 افتح الموقع في المتصفح
-        <a href="#" onclick="openExternal()">فتح في المتصفح</a>
+        <a href="https://example.com" target="_blank" rel="noopener noreferrer">فتح في المتصفح</a>
     </div>
 </div>
 
@@ -135,7 +135,7 @@ button:active{
 <div id="ayah"></div>
 
 <script>
-/* ===== تشغيل الإذاعة (محسن لفيسبوك) ===== */
+/* ===== تشغيل الإذاعة (محسن للفيسبوك) ===== */
 let playing = false;
 const radio = document.getElementById("radio");
 const btn = document.getElementById("playBtn");
@@ -144,13 +144,13 @@ const notice = document.getElementById("fbNotice");
 function togglePlay(){
     if(!playing){
         if(!radio.src){
-            radio.src = "https://stream.radiojar.com/8s5u5tpdtwzuv";
+            radio.src = "https://stream.radiojar.com/8s5u5tpdtwzuv"; // حط رابط الاستريم الخاص بك
         }
         radio.load();
         radio.play().then(()=>{
-            notice.style.display = "none";
+            notice.style.display = "none"; // الصوت شغال، نخفي الرسالة
         }).catch(()=>{
-            notice.style.display = "block";
+            notice.style.display = "block"; // الصوت متمنع، نظهر الرسالة
         });
 
         btn.innerHTML = "⏸️ إيقاف الإذاعة";
@@ -160,10 +160,6 @@ function togglePlay(){
         btn.innerHTML = "▶️ تشغيل الإذاعة";
         playing = false;
     }
-}
-
-function openExternal(){
-    window.open(window.location.href, "_blank");
 }
 
 /* ===== الآيات (Fade In / Fade Out) ===== */
@@ -195,7 +191,6 @@ const ayat = [
 "﴿ اللَّهُ لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ﴾",
 "﴿ وَلِلَّهِ الْأَسْمَاءُ الْحُسْنَى فَادْعُوهُ بِهَا ﴾"
 ];
-
 
 let currentAyah = 0;
 const ayahDiv = document.getElementById("ayah");
