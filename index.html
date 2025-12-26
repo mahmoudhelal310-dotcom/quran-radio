@@ -81,6 +81,8 @@ button:active{
     color:#000;
     border-radius:10px;
     font-size:14px;
+    text-align:center;
+    word-break:break-word;
 }
 
 #fbNotice a{
@@ -109,11 +111,11 @@ button:active{
     <!-- صوت بدون مصدر مبدئي -->
     <audio id="radio" preload="none" playsinline></audio>
 
-    <!-- رسالة فيسبوك -->
+    <!-- رسالة فيسبوك مع رابط مباشر -->
     <div id="fbNotice">
         🔊 إذا لم يعمل الصوت داخل فيسبوك  
-        🌐 افتح الموقع في المتصفح
-        <a href="https://example.com" target="_blank" rel="noopener noreferrer">فتح في المتصفح</a>
+        🌐 انسخ الرابط وافتحه في أي متصفح:
+        <br><a href="https://example.com" target="_blank">https://example.com</a>
     </div>
 </div>
 
@@ -144,13 +146,13 @@ const notice = document.getElementById("fbNotice");
 function togglePlay(){
     if(!playing){
         if(!radio.src){
-            radio.src = "https://stream.radiojar.com/8s5u5tpdtwzuv"; // حط رابط الاستريم الخاص بك
+            radio.src = "https://stream.radiojar.com/8s5u5tpdtwzuv"; // ضع رابط الاستريم الخاص بك
         }
         radio.load();
         radio.play().then(()=>{
             notice.style.display = "none"; // الصوت شغال، نخفي الرسالة
         }).catch(()=>{
-            notice.style.display = "block"; // الصوت متمنع، نظهر الرسالة
+            notice.style.display = "block"; // الصوت متمنع، نظهر الرسالة مع الرابط
         });
 
         btn.innerHTML = "⏸️ إيقاف الإذاعة";
