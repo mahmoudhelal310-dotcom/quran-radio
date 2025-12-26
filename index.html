@@ -59,7 +59,7 @@ button:active{
     background:#16a085;
 }
 
-#ayah {
+#ayah{
     margin:25px auto;
     padding:15px;
     max-width:600px;
@@ -69,8 +69,29 @@ button:active{
     color:#2e7d32;
     border-radius:10px;
     font-weight:bold;
-    opacity: 0;
+    opacity:0;
     transition: opacity 1.5s ease-in-out;
+}
+
+#fbNotice{
+    display:none;
+    margin-top:15px;
+    padding:12px;
+    background:#fff3cd;
+    color:#000;
+    border-radius:10px;
+    font-size:14px;
+}
+
+#fbNotice a{
+    display:block;
+    margin-top:8px;
+    padding:8px;
+    background:#1abc9c;
+    color:#000;
+    text-decoration:none;
+    border-radius:8px;
+    font-weight:bold;
 }
 </style>
 </head>
@@ -82,29 +103,19 @@ button:active{
     <div class="radio-icon">📻</div>
     <h1>إذاعة القرآن الكريم</h1>
     <p>استمع إلى تلاوة عطرة من كتاب الله</p>
-    <button onclick="togglePlay()">▶️ تشغيل الإذاعة</button>
-    <audio id="radio">
-        <source src="https://stream.radiojar.com/8s5u5tpdtwzuv" type="audio/mpeg">
-    </audio>
+
+    <button id="playBtn" onclick="togglePlay()">▶️ تشغيل الإذاعة</button>
+
+    <!-- صوت بدون مصدر مبدئي -->
+    <audio id="radio" preload="none" playsinline></audio>
+
+    <!-- رسالة فيسبوك -->
+    <div id="fbNotice">
+        🔊 إذا لم يعمل الصوت داخل فيسبوك  
+        🌐 افتح الموقع في المتصفح
+        <a href="#" onclick="openExternal()">فتح في المتصفح</a>
+    </div>
 </div>
-
-<script>
-let playing = false;
-const radio = document.getElementById("radio");
-const btn = document.querySelector("button");
-
-function togglePlay(){
-    if(!playing){
-        radio.play();
-        btn.innerHTML = "⏸️ إيقاف الإذاعة";
-        playing = true;
-    }else{
-        radio.pause();
-        btn.innerHTML = "▶️ تشغيل الإذاعة";
-        playing = false;
-    }
-}
-</script>
 
 <div style="
   margin:30px auto;
@@ -118,12 +129,44 @@ function togglePlay(){
   color:#2e7d32;
   font-weight:bold;
 ">
-  🌿 صدقة جارية — لا تنسونا من صالح دعائكم
+🌿 صدقة جارية — لا تنسونا من صالح دعائكم
 </div>
 
 <div id="ayah"></div>
 
 <script>
+/* ===== تشغيل الإذاعة (محسن لفيسبوك) ===== */
+let playing = false;
+const radio = document.getElementById("radio");
+const btn = document.getElementById("playBtn");
+const notice = document.getElementById("fbNotice");
+
+function togglePlay(){
+    if(!playing){
+        if(!radio.src){
+            radio.src = "https://stream.radiojar.com/8s5u5tpdtwzuv";
+        }
+        radio.load();
+        radio.play().then(()=>{
+            notice.style.display = "none";
+        }).catch(()=>{
+            notice.style.display = "block";
+        });
+
+        btn.innerHTML = "⏸️ إيقاف الإذاعة";
+        playing = true;
+    }else{
+        radio.pause();
+        btn.innerHTML = "▶️ تشغيل الإذاعة";
+        playing = false;
+    }
+}
+
+function openExternal(){
+    window.open(window.location.href, "_blank");
+}
+
+/* ===== الآيات (Fade In / Fade Out) ===== */
 const ayat = [
 "﴿ أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ ﴾",
 "﴿ وَقُل رَّبِّ زِدْنِي عِلْمًا ﴾",
@@ -144,7 +187,7 @@ const ayat = [
 "﴿ رَبَّنَا أَفْرِغْ عَلَيْنَا صَبْرًا وَتَوَفَّنَا مُسْلِمِينَ ﴾",
 "﴿ كُلُّ نَفْسٍ ذَائِقَةُ الْمَوْتِ ﴾",
 "﴿ إِنَّ فِي خَلْقِ السَّمَاوَاتِ وَالْأَرْضِ لَآيَاتٍ لِلْمُؤْمِنِينَ ﴾",
-"﴿ أَفَلَا يَنْظُرُونَ إِلَى الإِبِلِ كَيْفَ خُلِقَتْ ﴾",
+"﴿ أَفَلَا يَنْظُرُونَ إِلَى الْإِبِلِ كَيْفَ خُلِقَتْ ﴾",
 "﴿ أَفَلَا يَتَدَبَّرُونَ الْقُرْآنَ ﴾",
 "﴿ لَا إِلَهَ إِلَّا هُوَ عَلَيْهِ تَوَكَّلْتُ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ ﴾",
 "﴿ إِنَّ عِبَادِي لَيْسَ لَكَ عَلَيْهِمْ سُلْطَانٌ ﴾",
@@ -153,20 +196,21 @@ const ayat = [
 "﴿ وَلِلَّهِ الْأَسْمَاءُ الْحُسْنَى فَادْعُوهُ بِهَا ﴾"
 ];
 
+
 let currentAyah = 0;
 const ayahDiv = document.getElementById("ayah");
 
 function changeAyah(){
-    ayahDiv.style.opacity = 0; // تبدأ تتلاشى
-    setTimeout(() => {
+    ayahDiv.style.opacity = 0;
+    setTimeout(()=>{
         ayahDiv.innerHTML = "📖 " + ayat[currentAyah];
-        ayahDiv.style.opacity = 1; // تظهر تدريجيًا
+        ayahDiv.style.opacity = 1;
         currentAyah = (currentAyah + 1) % ayat.length;
-    }, 1500); // مدة الاختفاء متزامنة مع transition
+    },1500);
 }
 
 changeAyah();
-setInterval(changeAyah, 10000); // كل 10 ثواني
+setInterval(changeAyah,10000);
 </script>
 
 </body>
