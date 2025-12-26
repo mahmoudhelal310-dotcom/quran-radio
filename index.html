@@ -109,6 +109,38 @@ function togglePlay(){
 ">
   🌿 صدقة جارية — لا تنسونا من صالح دعائكم
 </div>
+<div id="ayah" style="
+  margin:25px auto;
+  padding:15px;
+  max-width:600px;
+  text-align:center;
+  font-size:18px;
+  background:#f1f8e9;
+  color:#2e7d32;
+  border-radius:10px;
+  font-weight:bold;
+">
+</div>
+<script>
+const ayat = [
+  "﴿ أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ ﴾",
+  "﴿ وَقُل رَّبِّ زِدْنِي عِلْمًا ﴾",
+  "﴿ إِنَّ مَعَ الْعُسْرِ يُسْرًا ﴾",
+  "﴿ وَمَا تَوْفِيقِي إِلَّا بِاللَّهِ ﴾",
+  "﴿ فَاذْكُرُونِي أَذْكُرْكُمْ ﴾"
+];
+
+let currentAyah = 0;
+
+function changeAyah() {
+  document.getElementById("ayah").innerHTML = "📖 " + ayat[currentAyah];
+  currentAyah = (currentAyah + 1) % ayat.length;
+}
+
+changeAyah();
+setInterval(changeAyah, 10000); // كل 10 ثواني
+</script>
+
 
 
 </body>
