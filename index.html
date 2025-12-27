@@ -8,6 +8,9 @@
 <!-- Favicon -->
 <link rel="icon" href="favicon.png" type="image/png">
 
+<!-- PWA Manifest -->
+<link rel="manifest" href="manifest.json">
+
 <style>
 body{
     margin:0;
@@ -27,8 +30,11 @@ body{
 }
 
 .creator{
-    font-size:16px;
-    color:#1abc9c;
+    font-size:18px;
+    color:#ffd700;
+    font-weight:bold;
+    letter-spacing:1px;
+    text-shadow: 1px 1px 2px #000;
     margin-bottom:15px;
 }
 
@@ -116,16 +122,7 @@ button:active{
 <body>
 
 <div class="radio-box">
-    <div class="creator" style="
-    font-size:18px;
-    color:#ffd700;       /* لون ذهبي جميل */
-    font-weight:bold;     /* خط عريض */
-    letter-spacing:1px;   /* مسافة بين الحروف */
-    text-shadow: 1px 1px 2px #000; /* ظل خفيف للنص */
-    margin-bottom:15px;
-">
-    by Mahmoud Helal
-</div>
+    <div class="creator">by Mahmoud Helal</div>
     <div class="radio-icon">📻</div>
     <h1>إذاعة القرآن الكريم</h1>
     <p>استمع إلى تلاوة عطرة من كتاب الله</p>
@@ -247,6 +244,13 @@ function changeAyah(){
 
 changeAyah();
 setInterval(changeAyah,10000);
+
+/* ===== تسجيل Service Worker ===== */
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js')
+  .then(() => console.log('Service Worker registered'))
+  .catch((err) => console.log('Service Worker failed', err));
+}
 </script>
 
 </body>
