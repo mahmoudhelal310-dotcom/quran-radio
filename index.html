@@ -8,8 +8,16 @@
 <!-- Favicon -->
 <link rel="icon" href="favicon.png" type="image/png">
 
-<!-- PWA Manifest -->
-<link rel="manifest" href="manifest.json">
+<!-- PWA Manifest مباشر -->
+<link rel="manifest" href="data:application/manifest+json,{
+  \"name\": \"إذاعة القرآن الكريم\",
+  \"short_name\": \"Quran Radio\",
+  \"start_url\": \"/\",
+  \"display\": \"standalone\",
+  \"background_color\": \"#0f2027\",
+  \"theme_color\": \"#0b2e2f\",
+  \"icons\": [{\"src\": \"favicon.png\", \"sizes\": \"64x64\", \"type\": \"image/png\"}]
+}">
 
 <style>
 body{
