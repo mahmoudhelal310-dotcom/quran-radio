@@ -1,0 +1,27 @@
+{
+  "name": "إذاعة القرآن الكريم",
+  "short_name": "Quran Radio",
+  "description": "إذاعة القرآن الكريم – استمع إلى تلاوات عطرة من كتاب الله على مدار الساعة",
+  "start_url": "/quran-radio/",
+  "display": "standalone",
+  "background_color": "#0f2027",
+  "theme_color": "#0b2e2f",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
