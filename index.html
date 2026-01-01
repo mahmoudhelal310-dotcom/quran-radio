@@ -155,23 +155,9 @@ button:active{
         🔊 إذا لم يعمل الصوت داخل فيسبوك  
         🌐 انسخ الرابط وافتحه في أي متصفح:
         <br>
-        <a id="fbLink" href="https://mahmoudhelal310-dotcom.github.io/quran-radio/" target="_blank">
-        https://mahmoudhelal310-dotcom.github.io/quran-radio/
-        </a>
+        <a id="fbLink" href="https://mahmoudhelal310-dotcom.github.io/quran-radio/" target="_blank">https://mahmoudhelal310-dotcom.github.io/quran-radio/</a>
         <br>
         <button id="copyBtn">نسخ الرابط</button>
-    </div>
-</div>
-
-<!-- ===== زر الورد اليومي (الإضافة الوحيدة) ===== -->
-<div style="max-width:420px;margin:20px auto;text-align:center;">
-    <button onclick="toggleWird()" style="background:#ffd54f;font-weight:bold;">
-        📖 الورد اليومي من القرآن
-    </button>
-
-    <div id="wirdBox" style="display:none;margin-top:15px;">
-        <img src="wird/today.jpg" alt="الورد اليومي"
-             style="max-width:100%;border-radius:12px;">
     </div>
 </div>
 
@@ -220,12 +206,6 @@ function togglePlay(){
     }
 }
 
-/* ===== الورد اليومي ===== */
-function toggleWird(){
-    const box = document.getElementById("wirdBox");
-    box.style.display = box.style.display === "none" ? "block" : "none";
-}
-
 /* ===== نسخ الرابط ===== */
 const copyBtn = document.getElementById("copyBtn");
 const fbLink = document.getElementById("fbLink");
@@ -234,10 +214,12 @@ copyBtn.addEventListener("click", () => {
     navigator.clipboard.writeText(fbLink.href).then(() => {
         copyBtn.innerText = "تم النسخ ✅";
         setTimeout(() => { copyBtn.innerText = "نسخ الرابط"; }, 2000);
+    }).catch(() => {
+        alert("فشل النسخ، انسخ الرابط يدويًا");
     });
 });
 
-/* ===== الآيات (كما هي بالكامل) ===== */
+/* ===== الآيات ===== */
 const ayat = [
 "﴿ أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ ﴾",
 "﴿ وَقُل رَّبِّ زِدْنِي عِلْمًا ﴾",
@@ -281,6 +263,13 @@ function changeAyah(){
 
 changeAyah();
 setInterval(changeAyah,10000);
+
+/* ===== تسجيل Service Worker ===== */
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js')
+  .then(() => console.log('Service Worker registered'))
+  .catch((err) => console.log('Service Worker failed', err));
+}
 </script>
 
 </body>
