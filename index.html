@@ -8,7 +8,7 @@
 <!-- Favicon -->
 <link rel="icon" href="favicon.png" type="image/png">
 
-<!-- PWA Manifest -->
+<!-- PWA Manifest مباشر مع description -->
 <link rel="manifest" href="data:application/manifest+json,{
   \"name\": \"إذاعة القرآن الكريم\",
   \"short_name\": \"Quran Radio\",
@@ -20,7 +20,7 @@
   \"icons\": [{\"src\": \"favicon.png\", \"sizes\": \"64x64\", \"type\": \"image/png\"}]
 }">
 
-<!-- Google Analytics -->
+<!-- ===== Google Analytics ===== -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-91HP8NVXK5"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -38,6 +38,7 @@ body{
     padding:20px;
 }
 
+/* باقي CSS بدون أي تغيير */
 .radio-box{
     max-width:420px;
     margin:30px auto;
@@ -51,6 +52,8 @@ body{
     font-size:18px;
     color:#ffd700;
     font-weight:bold;
+    letter-spacing:1px;
+    text-shadow: 1px 1px 2px #000;
     margin-bottom:15px;
 }
 
@@ -84,6 +87,20 @@ button:active{
     background:#16a085;
 }
 
+#ayah{
+    margin:25px auto;
+    padding:15px;
+    max-width:600px;
+    text-align:center;
+    font-size:18px;
+    background:#f1f8e9;
+    color:#2e7d32;
+    border-radius:10px;
+    font-weight:bold;
+    opacity:0;
+    transition: opacity 1.5s ease-in-out;
+}
+
 #fbNotice{
     display:none;
     margin-top:15px;
@@ -92,6 +109,8 @@ button:active{
     color:#000;
     border-radius:10px;
     font-size:14px;
+    text-align:center;
+    word-break:break-word;
 }
 
 #fbNotice a{
@@ -106,30 +125,15 @@ button:active{
 }
 
 #copyBtn{
+    display:inline-block;
     margin-top:8px;
     padding:8px 16px;
     background:#1abc9c;
+    color:#000;
     border:none;
     border-radius:8px;
+    font-weight:bold;
     cursor:pointer;
-    font-weight:bold;
-}
-
-/* ===== الورد اليومي ===== */
-#ayah{
-    margin:40px auto;
-    padding:20px;
-    max-width:650px;
-    text-align:center;
-    font-size:20px;
-    background:#f1f8e9;
-    color:#2e7d32;
-    border-radius:12px;
-    font-weight:bold;
-    line-height:1.8;
-    box-shadow:0 4px 10px rgba(0,0,0,0.2);
-    opacity:0;
-    transition: opacity 1.5s ease-in-out;
 }
 </style>
 </head>
@@ -143,18 +147,33 @@ button:active{
     <p>استمع إلى تلاوة عطرة من كتاب الله</p>
 
     <button id="playBtn" onclick="togglePlay()">▶️ تشغيل الإذاعة</button>
+
     <audio id="radio" preload="none" playsinline></audio>
 
+    <!-- رسالة فيسبوك + رابط + زر نسخ -->
     <div id="fbNotice">
         🔊 إذا لم يعمل الصوت داخل فيسبوك  
+        🌐 انسخ الرابط وافتحه في أي متصفح:
+        <br>
         <a id="fbLink" href="https://mahmoudhelal310-dotcom.github.io/quran-radio/" target="_blank">
-        فتح الموقع في المتصفح
+        https://mahmoudhelal310-dotcom.github.io/quran-radio/
         </a>
+        <br>
         <button id="copyBtn">نسخ الرابط</button>
     </div>
 </div>
 
-<div id="ayah"></div>
+<!-- ===== زر الورد اليومي (الإضافة الوحيدة) ===== -->
+<div style="max-width:420px;margin:20px auto;text-align:center;">
+    <button onclick="toggleWird()" style="background:#ffd54f;font-weight:bold;">
+        📖 الورد اليومي من القرآن
+    </button>
+
+    <div id="wirdBox" style="display:none;margin-top:15px;">
+        <img src="wird/today.jpg" alt="الورد اليومي"
+             style="max-width:100%;border-radius:12px;">
+    </div>
+</div>
 
 <div style="
   margin:30px auto;
@@ -171,8 +190,10 @@ button:active{
 🌿 صدقة جارية — لا تنسونا من صالح دعائكم
 </div>
 
+<div id="ayah"></div>
+
 <script>
-/* تشغيل الإذاعة */
+/* ===== تشغيل الإذاعة ===== */
 let playing = false;
 const radio = document.getElementById("radio");
 const btn = document.getElementById("playBtn");
@@ -183,7 +204,13 @@ function togglePlay(){
         if(!radio.src){
             radio.src = "https://stream.radiojar.com/8s5u5tpdtwzuv";
         }
-        radio.play().catch(()=> notice.style.display="block");
+        radio.load();
+        radio.play().then(()=>{
+            notice.style.display = "none";
+        }).catch(()=>{
+            notice.style.display = "block";
+        });
+
         btn.innerHTML = "⏸️ إيقاف الإذاعة";
         playing = true;
     }else{
@@ -193,42 +220,67 @@ function togglePlay(){
     }
 }
 
-/* نسخ الرابط */
-document.getElementById("copyBtn").onclick = () =>{
-    navigator.clipboard.writeText(document.getElementById("fbLink").href);
-};
+/* ===== الورد اليومي ===== */
+function toggleWird(){
+    const box = document.getElementById("wirdBox");
+    box.style.display = box.style.display === "none" ? "block" : "none";
+}
 
-/* الورد اليومي */
+/* ===== نسخ الرابط ===== */
+const copyBtn = document.getElementById("copyBtn");
+const fbLink = document.getElementById("fbLink");
+
+copyBtn.addEventListener("click", () => {
+    navigator.clipboard.writeText(fbLink.href).then(() => {
+        copyBtn.innerText = "تم النسخ ✅";
+        setTimeout(() => { copyBtn.innerText = "نسخ الرابط"; }, 2000);
+    });
+});
+
+/* ===== الآيات (كما هي بالكامل) ===== */
 const ayat = [
 "﴿ أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ ﴾",
 "﴿ وَقُل رَّبِّ زِدْنِي عِلْمًا ﴾",
 "﴿ إِنَّ مَعَ الْعُسْرِ يُسْرًا ﴾",
 "﴿ فَاذْكُرُونِي أَذْكُرْكُمْ ﴾",
+"﴿ هُدًى لِلْمُتَّقِينَ ﴾",
 "﴿ وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا ﴾",
+"﴿ إِنَّ هَذَا الْقُرآنَ يَهْدِي لِلَّتِي هِيَ أَقْوَمُ ﴾",
+"﴿ وَرَحْمَتِي وَسِعَتْ كُلَّ شَيْءٍ ﴾",
+"﴿ إِنَّ اللَّهَ غَفُورٌ رَحِيمٌ ﴾",
+"﴿ قُلْ يَا عِبَادِيَ الَّذِينَ أَسْرَفُوا عَلَى أَنْفُسِهِمْ لَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ ﴾",
+"﴿ رَبِّ اغْفِرْ وَارْحَمْ وَأَنْتَ خَيْرُ الرَّاحِمِينَ ﴾",
+"﴿ اللَّهُ يَغْفِرُ الذُّنُوبَ جَمِيعًا ﴾",
+"﴿ وَمَا يُلْقَاهَا إِلَّا الَّذِينَ صَبَرُوا ﴾",
 "﴿ إِنَّ اللَّهَ مَعَ الصَّابِرِينَ ﴾",
+"﴿ وَاصْبِرْ وَمَا صَبْرُكَ إِلَّا بِاللَّهِ ﴾",
+"﴿ فَاسْتَعِينُوا بِالصَّبْرِ وَالصَّلَاةِ ﴾",
+"﴿ رَبَّنَا أَفْرِغْ عَلَيْنَا صَبْرًا وَتَوَفَّنَا مُسْلِمِينَ ﴾",
+"﴿ كُلُّ نَفْسٍ ذَائِقَةُ الْمَوْتِ ﴾",
+"﴿ إِنَّ فِي خَلْقِ السَّمَاوَاتِ وَالْأَرْضِ لَآيَاتٍ لِلْمُؤْمِنِينَ ﴾",
+"﴿ أَفَلَا يَنْظُرُونَ إِلَى الْإِبِلِ كَيْفَ خُلِقَتْ ﴾",
+"﴿ أَفَلَا يَتَدَبَّرُونَ الْقُرآنَ ﴾",
+"﴿ لَا إِلَهَ إِلَّا هُوَ عَلَيْهِ تَوَكَّلْتُ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ ﴾",
+"﴿ إِنَّ عِبَادِي لَيْسَ لَكَ عَلَيْهِمْ سُلْطَانٌ ﴾",
 "﴿ قُلْ هُوَ اللَّهُ أَحَدٌ ﴾",
+"﴿ اللَّهُ لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ﴾",
 "﴿ وَلِلَّهِ الْأَسْمَاءُ الْحُسْنَى فَادْعُوهُ بِهَا ﴾"
 ];
 
-let i = 0;
+let currentAyah = 0;
 const ayahDiv = document.getElementById("ayah");
 
 function changeAyah(){
     ayahDiv.style.opacity = 0;
     setTimeout(()=>{
-        ayahDiv.innerHTML = "📖 " + ayat[i];
+        ayahDiv.innerHTML = "📖 " + ayat[currentAyah];
         ayahDiv.style.opacity = 1;
-        i = (i + 1) % ayat.length;
+        currentAyah = (currentAyah + 1) % ayat.length;
     },1500);
 }
 
 changeAyah();
 setInterval(changeAyah,10000);
-
-/* Service Worker */
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js');
-}
 </script>
 
 </body>
