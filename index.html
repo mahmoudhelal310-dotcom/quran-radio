@@ -5,10 +5,8 @@
 <title>إذاعة القرآن الكريم</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Favicon -->
 <link rel="icon" href="favicon.png" type="image/png">
 
-<!-- PWA Manifest مباشر مع description -->
 <link rel="manifest" href="data:application/manifest+json,{
   \"name\": \"إذاعة القرآن الكريم\",
   \"short_name\": \"Quran Radio\",
@@ -20,120 +18,73 @@
   \"icons\": [{\"src\": \"favicon.png\", \"sizes\": \"64x64\", \"type\": \"image/png\"}]
 }">
 
-<!-- ===== Google Analytics ===== -->
+<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-91HP8NVXK5"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-91HP8NVXK5');
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-91HP8NVXK5');
 </script>
 
 <style>
 body{
-    margin:0;
-    font-family: Tahoma, Arial;
-    background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
-    color:white;
-    padding:20px;
+  margin:0;
+  font-family:Tahoma, Arial;
+  background:linear-gradient(to bottom,#0f2027,#203a43,#2c5364);
+  color:white;
+  padding:20px;
 }
 
-/* باقي CSS بدون أي تغيير */
 .radio-box{
-    max-width:420px;
-    margin:30px auto;
-    background: rgba(0,0,0,0.5);
-    padding:30px;
-    border-radius:20px;
-    text-align:center;
+  max-width:420px;
+  margin:30px auto;
+  background:rgba(0,0,0,0.5);
+  padding:30px;
+  border-radius:20px;
+  text-align:center;
 }
 
-.creator{
-    font-size:18px;
-    color:#ffd700;
-    font-weight:bold;
-    letter-spacing:1px;
-    text-shadow: 1px 1px 2px #000;
-    margin-bottom:15px;
-}
-
-.radio-icon{
-    font-size:60px;
-    margin-bottom:15px;
-}
-
-h1{
-    font-size:26px;
-    margin-bottom:15px;
-}
-
-p{
-    font-size:16px;
-    margin-bottom:20px;
-}
-
+.creator{color:#ffd700;font-weight:bold;margin-bottom:15px;}
+.radio-icon{font-size:60px;}
 button{
-    width:100%;
-    padding:18px;
-    font-size:20px;
-    border:none;
-    border-radius:15px;
-    background:#1abc9c;
-    color:#000;
-    cursor:pointer;
+  width:100%;
+  padding:18px;
+  font-size:20px;
+  border:none;
+  border-radius:15px;
+  background:#1abc9c;
+  cursor:pointer;
+  margin-top:10px;
 }
 
-button:active{
-    background:#16a085;
+#wirdBox{
+  display:none;
+  margin:30px auto;
+  max-width:700px;
+  background:#fff;
+  padding:15px;
+  border-radius:12px;
+  color:#000;
+  text-align:center;
+}
+
+#wirdBox img{
+  width:100%;
+  max-width:600px;
+  border-radius:8px;
 }
 
 #ayah{
-    margin:25px auto;
-    padding:15px;
-    max-width:600px;
-    text-align:center;
-    font-size:18px;
-    background:#f1f8e9;
-    color:#2e7d32;
-    border-radius:10px;
-    font-weight:bold;
-    opacity:0;
-    transition: opacity 1.5s ease-in-out;
-}
-
-#fbNotice{
-    display:none;
-    margin-top:15px;
-    padding:12px;
-    background:#fff3cd;
-    color:#000;
-    border-radius:10px;
-    font-size:14px;
-    text-align:center;
-    word-break:break-word;
-}
-
-#fbNotice a{
-    display:block;
-    margin-top:8px;
-    padding:8px;
-    background:#1abc9c;
-    color:#000;
-    text-decoration:none;
-    border-radius:8px;
-    font-weight:bold;
-}
-
-#copyBtn{
-    display:inline-block;
-    margin-top:8px;
-    padding:8px 16px;
-    background:#1abc9c;
-    color:#000;
-    border:none;
-    border-radius:8px;
-    font-weight:bold;
-    cursor:pointer;
+  margin:25px auto;
+  padding:15px;
+  max-width:600px;
+  background:#f1f8e9;
+  color:#2e7d32;
+  border-radius:10px;
+  font-weight:bold;
+  opacity:0;
+  transition:opacity 1.5s;
 }
 </style>
 </head>
@@ -141,86 +92,52 @@ button:active{
 <body>
 
 <div class="radio-box">
-    <div class="creator">by Mahmoud Helal</div>
-    <div class="radio-icon">📻</div>
-    <h1>إذاعة القرآن الكريم</h1>
-    <p>استمع إلى تلاوة عطرة من كتاب الله</p>
+  <div class="creator">by Mahmoud Helal</div>
+  <div class="radio-icon">📻</div>
+  <h1>إذاعة القرآن الكريم</h1>
+  <p>استمع إلى تلاوة عطرة من كتاب الله</p>
 
-    <button id="playBtn" onclick="togglePlay()">▶️ تشغيل الإذاعة</button>
+  <button onclick="togglePlay()">▶️ تشغيل الإذاعة</button>
+  <button onclick="toggleWird()">📖 الورد اليومي</button>
 
-    <audio id="radio" preload="none" playsinline></audio>
-
-    <!-- رسالة فيسبوك + رابط + زر نسخ -->
-    <div id="fbNotice">
-        🔊 إذا لم يعمل الصوت داخل فيسبوك  
-        🌐 انسخ الرابط وافتحه في أي متصفح:
-        <br>
-        <a id="fbLink" href="https://mahmoudhelal310-dotcom.github.io/quran-radio/" target="_blank">https://mahmoudhelal310-dotcom.github.io/quran-radio/</a>
-        <br>
-        <button id="copyBtn">نسخ الرابط</button>
-    </div>
+  <audio id="radio" preload="none"></audio>
 </div>
 
-<div style="
-  margin:30px auto;
-  padding:12px;
-  max-width:500px;
-  border:1px solid #c8e6c9;
-  background:#f1f8e9;
-  border-radius:8px;
-  text-align:center;
-  font-size:18px;
-  color:#2e7d32;
-  font-weight:bold;
-">
+<div style="margin:30px auto;padding:12px;max-width:500px;background:#f1f8e9;border-radius:8px;text-align:center;color:#2e7d32;font-weight:bold;">
 🌿 صدقة جارية — لا تنسونا من صالح دعائكم
+</div>
+
+<!-- الورد اليومي -->
+<div id="wirdBox">
+  <h3>📖 الورد اليومي من القرآن الكريم</h3>
+  <img src="wird/today.jpg" alt="الورد اليومي"
+   onerror="this.style.display='none';this.parentElement.innerHTML+='<p>⚠️ لم يتم رفع ورد اليوم بعد</p>';">
+  <p style="margin-top:10px;">🌿 تقبل الله منا ومنكم</p>
 </div>
 
 <div id="ayah"></div>
 
 <script>
-/* ===== تشغيل الإذاعة ===== */
-let playing = false;
-const radio = document.getElementById("radio");
-const btn = document.getElementById("playBtn");
-const notice = document.getElementById("fbNotice");
+let playing=false;
+const radio=document.getElementById("radio");
 
 function togglePlay(){
-    if(!playing){
-        if(!radio.src){
-            radio.src = "https://stream.radiojar.com/8s5u5tpdtwzuv";
-        }
-        radio.load();
-        radio.play().then(()=>{
-            notice.style.display = "none";
-        }).catch(()=>{
-            notice.style.display = "block";
-        });
-
-        btn.innerHTML = "⏸️ إيقاف الإذاعة";
-        playing = true;
-    }else{
-        radio.pause();
-        btn.innerHTML = "▶️ تشغيل الإذاعة";
-        playing = false;
-    }
+  if(!playing){
+    radio.src="https://stream.radiojar.com/8s5u5tpdtwzuv";
+    radio.play();
+    playing=true;
+  }else{
+    radio.pause();
+    playing=false;
+  }
 }
 
-/* ===== نسخ الرابط ===== */
-const copyBtn = document.getElementById("copyBtn");
-const fbLink = document.getElementById("fbLink");
+function toggleWird(){
+  const box=document.getElementById("wirdBox");
+  box.style.display = box.style.display==="none" ? "block" : "none";
+}
 
-copyBtn.addEventListener("click", () => {
-    navigator.clipboard.writeText(fbLink.href).then(() => {
-        copyBtn.innerText = "تم النسخ ✅";
-        setTimeout(() => { copyBtn.innerText = "نسخ الرابط"; }, 2000);
-    }).catch(() => {
-        alert("فشل النسخ، انسخ الرابط يدويًا");
-    });
-});
-
-/* ===== الآيات ===== */
-const ayat = [
+const ayat=[
 "﴿ أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ ﴾",
 "﴿ وَقُل رَّبِّ زِدْنِي عِلْمًا ﴾",
 "﴿ إِنَّ مَعَ الْعُسْرِ يُسْرًا ﴾",
@@ -230,46 +147,22 @@ const ayat = [
 "﴿ إِنَّ هَذَا الْقُرآنَ يَهْدِي لِلَّتِي هِيَ أَقْوَمُ ﴾",
 "﴿ وَرَحْمَتِي وَسِعَتْ كُلَّ شَيْءٍ ﴾",
 "﴿ إِنَّ اللَّهَ غَفُورٌ رَحِيمٌ ﴾",
-"﴿ قُلْ يَا عِبَادِيَ الَّذِينَ أَسْرَفُوا عَلَى أَنْفُسِهِمْ لَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ ﴾",
-"﴿ رَبِّ اغْفِرْ وَارْحَمْ وَأَنْتَ خَيْرُ الرَّاحِمِينَ ﴾",
-"﴿ اللَّهُ يَغْفِرُ الذُّنُوبَ جَمِيعًا ﴾",
-"﴿ وَمَا يُلْقَاهَا إِلَّا الَّذِينَ صَبَرُوا ﴾",
-"﴿ إِنَّ اللَّهَ مَعَ الصَّابِرِينَ ﴾",
-"﴿ وَاصْبِرْ وَمَا صَبْرُكَ إِلَّا بِاللَّهِ ﴾",
-"﴿ فَاسْتَعِينُوا بِالصَّبْرِ وَالصَّلَاةِ ﴾",
-"﴿ رَبَّنَا أَفْرِغْ عَلَيْنَا صَبْرًا وَتَوَفَّنَا مُسْلِمِينَ ﴾",
-"﴿ كُلُّ نَفْسٍ ذَائِقَةُ الْمَوْتِ ﴾",
-"﴿ إِنَّ فِي خَلْقِ السَّمَاوَاتِ وَالْأَرْضِ لَآيَاتٍ لِلْمُؤْمِنِينَ ﴾",
-"﴿ أَفَلَا يَنْظُرُونَ إِلَى الْإِبِلِ كَيْفَ خُلِقَتْ ﴾",
-"﴿ أَفَلَا يَتَدَبَّرُونَ الْقُرآنَ ﴾",
-"﴿ لَا إِلَهَ إِلَّا هُوَ عَلَيْهِ تَوَكَّلْتُ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ ﴾",
-"﴿ إِنَّ عِبَادِي لَيْسَ لَكَ عَلَيْهِمْ سُلْطَانٌ ﴾",
-"﴿ قُلْ هُوَ اللَّهُ أَحَدٌ ﴾",
-"﴿ اللَّهُ لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ﴾",
-"﴿ وَلِلَّهِ الْأَسْمَاءُ الْحُسْنَى فَادْعُوهُ بِهَا ﴾"
+"﴿ قُلْ يَا عِبَادِيَ الَّذِينَ أَسْرَفُوا عَلَى أَنْفُسِهِمْ لَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ ﴾"
 ];
 
-let currentAyah = 0;
-const ayahDiv = document.getElementById("ayah");
+let i=0;
+const ayahDiv=document.getElementById("ayah");
 
 function changeAyah(){
-    ayahDiv.style.opacity = 0;
-    setTimeout(()=>{
-        ayahDiv.innerHTML = "📖 " + ayat[currentAyah];
-        ayahDiv.style.opacity = 1;
-        currentAyah = (currentAyah + 1) % ayat.length;
-    },1500);
+  ayahDiv.style.opacity=0;
+  setTimeout(()=>{
+    ayahDiv.innerHTML="📖 "+ayat[i];
+    ayahDiv.style.opacity=1;
+    i=(i+1)%ayat.length;
+  },1500);
 }
-
 changeAyah();
 setInterval(changeAyah,10000);
-
-/* ===== تسجيل Service Worker ===== */
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js')
-  .then(() => console.log('Service Worker registered'))
-  .catch((err) => console.log('Service Worker failed', err));
-}
 </script>
 
 </body>
