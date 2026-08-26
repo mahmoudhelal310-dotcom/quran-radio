@@ -38,7 +38,6 @@ body{
     padding:20px;
 }
 
-/* باقي CSS بدون أي تغيير */
 .radio-box{
     max-width:420px;
     margin:30px auto;
@@ -85,6 +84,56 @@ button{
 
 button:active{
     background:#16a085;
+}
+
+#sleepTimerBox{
+    margin-top:15px;
+    padding:15px;
+    background:rgba(255,255,255,0.10);
+    border-radius:15px;
+}
+
+#sleepTimerBox label{
+    display:block;
+    font-size:18px;
+    margin-bottom:10px;
+    font-weight:bold;
+}
+
+#sleepTime{
+    width:100%;
+    padding:12px;
+    font-size:17px;
+    border:none;
+    border-radius:10px;
+    box-sizing:border-box;
+    text-align:center;
+    background:#fff;
+    color:#222;
+}
+
+#startTimerBtn{
+    margin-top:10px;
+    padding:12px;
+    font-size:17px;
+    background:#f1c40f;
+}
+
+#cancelTimerBtn{
+    margin-top:8px;
+    padding:10px;
+    font-size:16px;
+    background:#e74c3c;
+    color:white;
+    display:none;
+}
+
+#timerDisplay{
+    margin-top:12px;
+    font-size:20px;
+    font-weight:bold;
+    color:#ffd700;
+    display:none;
 }
 
 #ayah{
@@ -150,6 +199,31 @@ button:active{
 
     <audio id="radio" preload="none" playsinline></audio>
 
+    <!-- ===== مؤقت النوم ===== -->
+    <div id="sleepTimerBox">
+
+        <label>⏰ مؤقت النوم</label>
+
+        <select id="sleepTime">
+            <option value="15">15 دقيقة</option>
+            <option value="30">30 دقيقة</option>
+            <option value="45">45 دقيقة</option>
+            <option value="60">60 دقيقة</option>
+            <option value="90">90 دقيقة</option>
+        </select>
+
+        <button id="startTimerBtn" onclick="startSleepTimer()">
+            ⏰ تشغيل مؤقت النوم
+        </button>
+
+        <button id="cancelTimerBtn" onclick="cancelSleepTimer()">
+            ❌ إلغاء المؤقت
+        </button>
+
+        <div id="timerDisplay"></div>
+
+    </div>
+
     <!-- رسالة فيسبوك + رابط + زر نسخ -->
     <div id="fbNotice">
         🔊 إذا لم يعمل الصوت داخل فيسبوك  
@@ -181,45 +255,171 @@ button:active{
 <script>
 /* ===== تشغيل الإذاعة ===== */
 let playing = false;
+
 const radio = document.getElementById("radio");
 const btn = document.getElementById("playBtn");
 const notice = document.getElementById("fbNotice");
 
 function togglePlay(){
+
     if(!playing){
+
         if(!radio.src){
             radio.src = "https://stream.radiojar.com/8s5u5tpdtwzuv";
         }
+
         radio.load();
+
         radio.play().then(()=>{
+
             notice.style.display = "none";
+
         }).catch(()=>{
+
             notice.style.display = "block";
+
         });
 
         btn.innerHTML = "⏸️ إيقاف الإذاعة";
         playing = true;
+
     }else{
+
         radio.pause();
+
         btn.innerHTML = "▶️ تشغيل الإذاعة";
         playing = false;
+
     }
 }
 
+
+/* =====================================================
+   مؤقت النوم
+   ===================================================== */
+
+let sleepTimer = null;
+let sleepEndTime = null;
+
+const sleepTime = document.getElementById("sleepTime");
+const startTimerBtn = document.getElementById("startTimerBtn");
+const cancelTimerBtn = document.getElementById("cancelTimerBtn");
+const timerDisplay = document.getElementById("timerDisplay");
+
+
+function startSleepTimer(){
+
+    // إلغاء أي مؤقت سابق
+    if(sleepTimer){
+        clearInterval(sleepTimer);
+    }
+
+    const minutes = parseInt(sleepTime.value);
+
+    // حساب وقت انتهاء المؤقت
+    sleepEndTime = Date.now() + (minutes * 60 * 1000);
+
+    // إظهار حالة المؤقت
+    timerDisplay.style.display = "block";
+    cancelTimerBtn.style.display = "block";
+
+    startTimerBtn.innerHTML = "⏰ إعادة ضبط المؤقت";
+
+    updateSleepTimer();
+
+    sleepTimer = setInterval(updateSleepTimer,1000);
+}
+
+
+function updateSleepTimer(){
+
+    const remaining = sleepEndTime - Date.now();
+
+    if(remaining <= 0){
+
+        clearInterval(sleepTimer);
+        sleepTimer = null;
+
+        // إيقاف الإذاعة
+        radio.pause();
+
+        // إعادة حالة الزر
+        btn.innerHTML = "▶️ تشغيل الإذاعة";
+        playing = false;
+
+        // إخفاء المؤقت
+        timerDisplay.style.display = "none";
+        cancelTimerBtn.style.display = "none";
+
+        startTimerBtn.innerHTML = "⏰ تشغيل مؤقت النوم";
+
+        alert("⏰ انتهى مؤقت النوم وتم إيقاف الإذاعة.");
+
+        return;
+    }
+
+    const totalSeconds = Math.ceil(remaining / 1000);
+
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    let text = "⏰ متبقي: ";
+
+    if(hours > 0){
+        text += hours + " ساعة ";
+    }
+
+    text += String(minutes).padStart(2,"0");
+    text += ":";
+    text += String(seconds).padStart(2,"0");
+
+    timerDisplay.innerHTML = text;
+}
+
+
+function cancelSleepTimer(){
+
+    if(sleepTimer){
+        clearInterval(sleepTimer);
+        sleepTimer = null;
+    }
+
+    sleepEndTime = null;
+
+    timerDisplay.style.display = "none";
+    cancelTimerBtn.style.display = "none";
+
+    startTimerBtn.innerHTML = "⏰ تشغيل مؤقت النوم";
+}
+
+
 /* ===== نسخ الرابط ===== */
+
 const copyBtn = document.getElementById("copyBtn");
 const fbLink = document.getElementById("fbLink");
 
 copyBtn.addEventListener("click", () => {
+
     navigator.clipboard.writeText(fbLink.href).then(() => {
+
         copyBtn.innerText = "تم النسخ ✅";
-        setTimeout(() => { copyBtn.innerText = "نسخ الرابط"; }, 2000);
+
+        setTimeout(() => {
+            copyBtn.innerText = "نسخ الرابط";
+        }, 2000);
+
     }).catch(() => {
+
         alert("فشل النسخ، انسخ الرابط يدويًا");
+
     });
+
 });
 
+
 /* ===== الآيات ===== */
+
 const ayat = [
 "﴿ أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ ﴾",
 "﴿ وَقُل رَّبِّ زِدْنِي عِلْمًا ﴾",
@@ -253,22 +453,34 @@ let currentAyah = 0;
 const ayahDiv = document.getElementById("ayah");
 
 function changeAyah(){
+
     ayahDiv.style.opacity = 0;
+
     setTimeout(()=>{
+
         ayahDiv.innerHTML = "📖 " + ayat[currentAyah];
+
         ayahDiv.style.opacity = 1;
+
         currentAyah = (currentAyah + 1) % ayat.length;
+
     },1500);
 }
 
 changeAyah();
 setInterval(changeAyah,10000);
 
+
 /* ===== تسجيل Service Worker ===== */
+
 if ('serviceWorker' in navigator) {
+
   navigator.serviceWorker.register('service-worker.js')
+
   .then(() => console.log('Service Worker registered'))
+
   .catch((err) => console.log('Service Worker failed', err));
+
 }
 </script>
 
