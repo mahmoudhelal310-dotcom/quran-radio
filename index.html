@@ -38,6 +38,7 @@ body{
     padding:20px;
 }
 
+/* باقي CSS بدون أي تغيير */
 .radio-box{
     max-width:420px;
     margin:30px auto;
@@ -86,26 +87,27 @@ button:active{
     background:#16a085;
 }
 
+/* ===== مؤقت النوم - مساحة أصغر ===== */
 #sleepTimerBox{
-    margin-top:15px;
-    padding:15px;
+    margin-top:10px;
+    padding:8px 10px;
     background:rgba(255,255,255,0.10);
-    border-radius:15px;
+    border-radius:10px;
 }
 
 #sleepTimerBox label{
     display:block;
-    font-size:18px;
-    margin-bottom:10px;
+    font-size:15px;
+    margin-bottom:6px;
     font-weight:bold;
 }
 
 #sleepTime{
     width:100%;
-    padding:12px;
-    font-size:17px;
+    padding:7px;
+    font-size:14px;
     border:none;
-    border-radius:10px;
+    border-radius:7px;
     box-sizing:border-box;
     text-align:center;
     background:#fff;
@@ -113,24 +115,24 @@ button:active{
 }
 
 #startTimerBtn{
-    margin-top:10px;
-    padding:12px;
-    font-size:17px;
+    margin-top:6px;
+    padding:8px;
+    font-size:14px;
     background:#f1c40f;
 }
 
 #cancelTimerBtn{
-    margin-top:8px;
-    padding:10px;
-    font-size:16px;
+    margin-top:5px;
+    padding:7px;
+    font-size:13px;
     background:#e74c3c;
     color:white;
     display:none;
 }
 
 #timerDisplay{
-    margin-top:12px;
-    font-size:20px;
+    margin-top:7px;
+    font-size:16px;
     font-weight:bold;
     color:#ffd700;
     display:none;
@@ -255,44 +257,30 @@ button:active{
 <script>
 /* ===== تشغيل الإذاعة ===== */
 let playing = false;
-
 const radio = document.getElementById("radio");
 const btn = document.getElementById("playBtn");
 const notice = document.getElementById("fbNotice");
 
 function togglePlay(){
-
     if(!playing){
-
         if(!radio.src){
             radio.src = "https://stream.radiojar.com/8s5u5tpdtwzuv";
         }
-
         radio.load();
-
         radio.play().then(()=>{
-
             notice.style.display = "none";
-
         }).catch(()=>{
-
             notice.style.display = "block";
-
         });
 
         btn.innerHTML = "⏸️ إيقاف الإذاعة";
         playing = true;
-
     }else{
-
         radio.pause();
-
         btn.innerHTML = "▶️ تشغيل الإذاعة";
         playing = false;
-
     }
 }
-
 
 /* =====================================================
    مؤقت النوم
@@ -395,31 +383,20 @@ function cancelSleepTimer(){
 
 
 /* ===== نسخ الرابط ===== */
-
 const copyBtn = document.getElementById("copyBtn");
 const fbLink = document.getElementById("fbLink");
 
 copyBtn.addEventListener("click", () => {
-
     navigator.clipboard.writeText(fbLink.href).then(() => {
-
         copyBtn.innerText = "تم النسخ ✅";
-
-        setTimeout(() => {
-            copyBtn.innerText = "نسخ الرابط";
-        }, 2000);
-
+        setTimeout(() => { copyBtn.innerText = "نسخ الرابط"; }, 2000);
     }).catch(() => {
-
         alert("فشل النسخ، انسخ الرابط يدويًا");
-
     });
-
 });
 
 
 /* ===== الآيات ===== */
-
 const ayat = [
 "﴿ أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ ﴾",
 "﴿ وَقُل رَّبِّ زِدْنِي عِلْمًا ﴾",
@@ -453,17 +430,11 @@ let currentAyah = 0;
 const ayahDiv = document.getElementById("ayah");
 
 function changeAyah(){
-
     ayahDiv.style.opacity = 0;
-
     setTimeout(()=>{
-
         ayahDiv.innerHTML = "📖 " + ayat[currentAyah];
-
         ayahDiv.style.opacity = 1;
-
         currentAyah = (currentAyah + 1) % ayat.length;
-
     },1500);
 }
 
@@ -472,15 +443,10 @@ setInterval(changeAyah,10000);
 
 
 /* ===== تسجيل Service Worker ===== */
-
 if ('serviceWorker' in navigator) {
-
   navigator.serviceWorker.register('service-worker.js')
-
   .then(() => console.log('Service Worker registered'))
-
   .catch((err) => console.log('Service Worker failed', err));
-
 }
 </script>
 
