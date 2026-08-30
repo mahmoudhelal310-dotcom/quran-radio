@@ -1,378 +1,454 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إذاعة القرآن الكريم</title>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-91HP8NVXK5"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-91HP8NVXK5');
-    </script>
-    <style>
-        body {
-            margin: 0;
-            font-family: Tahoma, Arial, sans-serif;
-            background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
-            color: white;
-            padding: 20px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        .radio-box {
-            width: 100%;
-            max-width: 420px;
-            margin: 10px auto;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 25px;
-            border-radius: 20px;
-            text-align: center;
-            box-sizing: border-box;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            backdrop-filter: blur(4px);
-        }
-        .creator {
-            font-size: 16px;
-            color: #ffd700;
-            font-weight: bold;
-            letter-spacing: 1px;
-            text-shadow: 1px 1px 2px #000;
-            margin-bottom: 12px;
-        }
-        .radio-icon {
-            font-size: 50px;
-            margin-bottom: 10px;
-        }
-        h1 {
-            font-size: 24px;
-            margin: 0 0 10px 0;
-        }
-        p {
-            font-size: 15px;
-            margin: 0 0 20px 0;
-            color: #ddd;
-        }
-        button {
-            width: 100%;
-            padding: 16px;
-            font-size: 18px;
-            border: none;
-            border-radius: 15px;
-            background: #1abc9c;
-            color: #000;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background 0.2s;
-        }
-        button:active {
-            background: #16a085;
-        }
-        /* ===== مؤقت النوم ===== */
-        #sleepTimerBox {
-            margin-top: 15px;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.10);
-            border-radius: 10px;
-        }
-        #sleepTimerBox label {
-            display: block;
-            font-size: 14px;
-            margin-bottom: 6px;
-            font-weight: bold;
-        }
-        #sleepTime {
-            width: 100%;
-            padding: 8px;
-            font-size: 14px;
-            border: none;
-            border-radius: 7px;
-            box-sizing: border-box;
-            text-align: center;
-            background: #fff;
-            color: #222;
-        }
-        #startTimerBtn {
-            margin-top: 8px;
-            padding: 10px;
-            font-size: 14px;
-            background: #f1c40f;
-            color: #000;
-        }
-        #cancelTimerBtn {
-            margin-top: 5px;
-            padding: 8px;
-            font-size: 13px;
-            background: #e74c3c;
-            color: white;
-            display: none;
-        }
-        #timerDisplay {
-            margin-top: 8px;
-            font-size: 15px;
-            font-weight: bold;
-            color: #ffd700;
-            display: none;
-        }
-        #ayah {
-            margin: 20px auto;
-            padding: 15px;
-            max-width: 420px;
-            text-align: center;
-            font-size: 16px;
-            background: #f1f8e9;
-            color: #2e7d32;
-            border-radius: 10px;
-            font-weight: bold;
-            opacity: 0;
-            transition: opacity 1.5s ease-in-out;
-            box-sizing: border-box;
-        }
-        #fbNotice {
-            display: none;
-            margin-top: 15px;
-            padding: 12px;
-            background: #fff3cd;
-            color: #000;
-            border-radius: 10px;
-            font-size: 13px;
-            text-align: center;
-            word-break: break-word;
-        }
-        #fbNotice a {
-            display: block;
-            margin-top: 8px;
-            padding: 8px;
-            background: #1abc9c;
-            color: #000;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
-        }
-        #copyBtn {
-            display: inline-block;
-            margin-top: 8px;
-            padding: 8px 16px;
-            background: #1abc9c;
-            color: #000;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            width: auto;
-            font-size: 14px;
-        }
-        .footer-sadaqah {
-            margin-top: 15px;
-            font-size: 14px;
-            color: #e0e0e0;
-            text-align: center;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>إذاعة القرآن الكريم</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Favicon -->
+<link rel="icon" href="favicon.png" type="image/png">
+
+<!-- PWA Manifest مباشر مع description -->
+<link rel="manifest" href="data:application/manifest+json,{
+  \"name\": \"إذاعة القرآن الكريم\",
+  \"short_name\": \"Quran Radio\",
+  \"description\": \"استمع إلى تلاوات عطرة من كتاب الله الكريم مع إذاعة القرآن الكريم.\",
+  \"start_url\": \"/\",
+  \"display\": \"standalone\",
+  \"background_color\": \"#0f2027\",
+  \"theme_color\": \"#0b2e2f\",
+  \"icons\": [{\"src\": \"favicon.png\", \"sizes\": \"64x64\", \"type\": \"image/png\"}]
+}">
+
+<!-- ===== Google Analytics ===== -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-91HP8NVXK5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-91HP8NVXK5');
+</script>
+
+<style>
+body{
+    margin:0;
+    font-family: Tahoma, Arial;
+    background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+    color:white;
+    padding:20px;
+}
+
+/* باقي CSS بدون أي تغيير */
+.radio-box{
+    max-width:420px;
+    margin:30px auto;
+    background: rgba(0,0,0,0.5);
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
+}
+
+.creator{
+    font-size:18px;
+    color:#ffd700;
+    font-weight:bold;
+    letter-spacing:1px;
+    text-shadow: 1px 1px 2px #000;
+    margin-bottom:15px;
+}
+
+.radio-icon{
+    font-size:60px;
+    margin-bottom:15px;
+}
+
+h1{
+    font-size:26px;
+    margin-bottom:15px;
+}
+
+p{
+    font-size:16px;
+    margin-bottom:20px;
+}
+
+button{
+    width:100%;
+    padding:18px;
+    font-size:20px;
+    border:none;
+    border-radius:15px;
+    background:#1abc9c;
+    color:#000;
+    cursor:pointer;
+}
+
+button:active{
+    background:#16a085;
+}
+
+/* ===== مؤقت النوم - مساحة أصغر ===== */
+#sleepTimerBox{
+    margin-top:10px;
+    padding:8px 10px;
+    background:rgba(255,255,255,0.10);
+    border-radius:10px;
+}
+
+#sleepTimerBox label{
+    display:block;
+    font-size:15px;
+    margin-bottom:6px;
+    font-weight:bold;
+}
+
+#sleepTime{
+    width:100%;
+    padding:7px;
+    font-size:14px;
+    border:none;
+    border-radius:7px;
+    box-sizing:border-box;
+    text-align:center;
+    background:#fff;
+    color:#222;
+}
+
+#startTimerBtn{
+    margin-top:6px;
+    padding:8px;
+    font-size:14px;
+    background:#f1c40f;
+}
+
+#cancelTimerBtn{
+    margin-top:5px;
+    padding:7px;
+    font-size:13px;
+    background:#e74c3c;
+    color:white;
+    display:none;
+}
+
+#timerDisplay{
+    margin-top:7px;
+    font-size:16px;
+    font-weight:bold;
+    color:#ffd700;
+    display:none;
+}
+
+#ayah{
+    margin:25px auto;
+    padding:15px;
+    max-width:600px;
+    text-align:center;
+    font-size:18px;
+    background:#f1f8e9;
+    color:#2e7d32;
+    border-radius:10px;
+    font-weight:bold;
+    opacity:0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+#fbNotice{
+    display:none;
+    margin-top:15px;
+    padding:12px;
+    background:#fff3cd;
+    color:#000;
+    border-radius:10px;
+    font-size:14px;
+    text-align:center;
+    word-break:break-word;
+}
+
+#fbNotice a{
+    display:block;
+    margin-top:8px;
+    padding:8px;
+    background:#1abc9c;
+    color:#000;
+    text-decoration:none;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+#copyBtn{
+    display:inline-block;
+    margin-top:8px;
+    padding:8px 16px;
+    background:#1abc9c;
+    color:#000;
+    border:none;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+</style>
 </head>
+
 <body>
 
-    <div class="radio-box">
-        <div class="creator">by Mahmoud Helal</div>
-        <div class="radio-icon">📻</div>
-        <h1>إذاعة القرآن الكريم</h1>
-        <p>استمع إلى تلاوة عطرة من كتاب الله</p>
-        
-        <button id="playBtn">▶️ تشغيل الإذاعة</button>
-        <audio id="radio" preload="none" playsinline></audio> 
+<div class="radio-box">
+    <div class="creator">by Mahmoud Helal</div>
+    <div class="radio-icon">📻</div>
+    <h1>إذاعة القرآن الكريم</h1>
+    <p>استمع إلى تلاوة عطرة من كتاب الله</p>
 
-        <!-- ===== مؤقت النوم ===== -->
-        <div id="sleepTimerBox">
-            <label>⏰ مؤقت النوم</label>
-            <select id="sleepTime">
-                <option value="15">15 دقيقة</option>
-                <option value="30">30 دقيقة</option>
-                <option value="45">45 دقيقة</option>
-                <option value="60">60 دقيقة</option>
-                <option value="90">90 دقيقة</option>
-            </select>
-            <button id="startTimerBtn">⏰ تشغيل مؤقت النوم</button>
-            <button id="cancelTimerBtn">❌ إلغاء المؤقت</button>
-            <div id="timerDisplay"></div>
-        </div>
+    <button id="playBtn" onclick="togglePlay()">▶️ تشغيل الإذاعة</button>
 
-        <!-- رسالة فيسبوك + رابط + زر نسخ -->
-        <div id="fbNotice">
-            🔊 إذا لم يعمل الصوت داخل فيسبوك<br>
-            🌐 انسخ الرابط وافتحه في أي متصفح:
-            <a id="fbLink" href="https://mahmoudhelal310-dotcom.github.io/quran-radio/" target="_blank">https://mahmoudhelal310-dotcom.github.io/quran-radio/</a>
-            <button id="copyBtn">نسخ الرابط</button>
-        </div>
+    <audio id="radio" preload="none" playsinline></audio>
+
+    <!-- ===== مؤقت النوم ===== -->
+    <div id="sleepTimerBox">
+
+        <label>⏰ مؤقت النوم</label>
+
+        <select id="sleepTime">
+            <option value="15">15 دقيقة</option>
+            <option value="30">30 دقيقة</option>
+            <option value="45">45 دقيقة</option>
+            <option value="60">60 دقيقة</option>
+            <option value="90">90 دقيقة</option>
+        </select>
+
+        <button id="startTimerBtn" onclick="startSleepTimer()">
+            ⏰ تشغيل مؤقت النوم
+        </button>
+
+        <button id="cancelTimerBtn" onclick="cancelSleepTimer()">
+            ❌ إلغاء المؤقت
+        </button>
+
+        <div id="timerDisplay"></div>
+
     </div>
 
-    <!-- الآيات القرآنية -->
-    <div id="ayah"></div>
+    <!-- رسالة فيسبوك + رابط + زر نسخ -->
+    <div id="fbNotice">
+        🔊 إذا لم يعمل الصوت داخل فيسبوك  
+        🌐 انسخ الرابط وافتحه في أي متصفح:
+        <br>
+        <a id="fbLink" href="https://mahmoudhelal310-dotcom.github.io/quran-radio/" target="_blank">https://mahmoudhelal310-dotcom.github.io/quran-radio/</a>
+        <br>
+        <button id="copyBtn">نسخ الرابط</button>
+    </div>
+</div>
 
-    <div class="footer-sadaqah">🌿 صدقة جارية — لا تنسونا من صالح دعائكم</div>
+<div style="
+  margin:30px auto;
+  padding:12px;
+  max-width:500px;
+  border:1px solid #c8e6c9;
+  background:#f1f8e9;
+  border-radius:8px;
+  text-align:center;
+  font-size:18px;
+  color:#2e7d32;
+  font-weight:bold;
+">
+🌿 صدقة جارية — لا تنسونا من صالح دعائكم
+</div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            /* ===== تشغيل الإذاعة ===== */
-            let playing = false;
-            const radio = document.getElementById("radio");
-            const btn = document.getElementById("playBtn");
-            const notice = document.getElementById("fbNotice");
+<div id="ayah"></div>
 
-            btn.addEventListener("click", () => {
-                if (!playing) {
-                    if (!radio.src) {
-                        radio.src = "https://stream.radiojar.com/8s5u5tpdtwzuv";
-                    }
-                    radio.load();
-                    radio.play().then(() => {
-                        notice.style.display = "none";
-                    }).catch(() => {
-                        notice.style.display = "block";
-                    });
-                    btn.innerHTML = "⏸️ إيقاف الإذاعة";
-                    playing = true;
-                } else {
-                    radio.pause();
-                    btn.innerHTML = "▶️ تشغيل الإذاعة";
-                    playing = false;
-                }
-            });
+<script>
+/* ===== تشغيل الإذاعة ===== */
+let playing = false;
+const radio = document.getElementById("radio");
+const btn = document.getElementById("playBtn");
+const notice = document.getElementById("fbNotice");
 
-            /* ===================================================== مؤقت النوم ===================================================== */
-            let sleepTimer = null;
-            let sleepEndTime = null;
-            const sleepTime = document.getElementById("sleepTime");
-            const startTimerBtn = document.getElementById("startTimerBtn");
-            const cancelTimerBtn = document.getElementById("cancelTimerBtn");
-            const timerDisplay = document.getElementById("timerDisplay");
-
-            window.startSleepTimer = function() {
-                if (sleepTimer) {
-                    clearInterval(sleepTimer);
-                }
-                const minutes = parseInt(sleepTime.value);
-                sleepEndTime = Date.now() + (minutes * 60 * 1000);
-                timerDisplay.style.display = "block";
-                cancelTimerBtn.style.display = "block";
-                startTimerBtn.innerHTML = "⏰ إعادة ضبط المؤقت";
-                updateSleepTimer();
-                sleepTimer = setInterval(updateSleepTimer, 1000);
-            };
-
-            startTimerBtn.addEventListener("click", window.startSleepTimer);
-
-            function updateSleepTimer() {
-                const remaining = sleepEndTime - Date.now();
-                if (remaining <= 0) {
-                    clearInterval(sleepTimer);
-                    sleepTimer = null;
-                    radio.pause();
-                    btn.innerHTML = "▶️ تشغيل الإذاعة";
-                    playing = false;
-                    timerDisplay.style.display = "none";
-                    cancelTimerBtn.style.display = "none";
-                    startTimerBtn.innerHTML = "⏰ تشغيل مؤقت النوم";
-                    alert("⏰ انتهى مؤقت النوم وتم إيقاف الإذاعة.");
-                    return;
-                }
-                const totalSeconds = Math.ceil(remaining / 1000);
-                const hours = Math.floor(totalSeconds / 3600);
-                const minutes = Math.floor((totalSeconds % 3600) / 60);
-                const seconds = totalSeconds % 60;
-                let text = "⏰ متبقي: ";
-                if (hours > 0) {
-                    text += hours + " ساعة ";
-                }
-                text += String(minutes).padStart(2, "0") + ":" + String(seconds).padStart(2, "0");
-                timerDisplay.innerHTML = text;
-            }
-
-            window.cancelSleepTimer = function() {
-                if (sleepTimer) {
-                    clearInterval(sleepTimer);
-                    sleepTimer = null;
-                }
-                sleepEndTime = null;
-                timerDisplay.style.display = "none";
-                cancelTimerBtn.style.display = "none";
-                startTimerBtn.innerHTML = "⏰ تشغيل مؤقت النوم";
-            };
-
-            cancelTimerBtn.addEventListener("click", window.cancelSleepTimer);
-
-            /* ===== نسخ الرابط ===== */
-            const copyBtn = document.getElementById("copyBtn");
-            const fbLink = document.getElementById("fbLink");
-            copyBtn.addEventListener("click", () => {
-                navigator.clipboard.writeText(fbLink.href).then(() => {
-                    copyBtn.innerText = "تم النسخ ✅";
-                    setTimeout(() => {
-                        copyBtn.innerText = "نسخ الرابط";
-                    }, 2000);
-                }).catch(() => {
-                    alert("فشل النسخ، انسخ الرابط يدويًا");
-                });
-            });
-
-            /* ===== الآيات ===== */
-            const ayat = [
-                "﴿ أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ ﴾",
-                "﴿ وَقُل رَّبِّ زِدْنِي عِلْمًا ﴾",
-                "﴿ إِنَّ مَعَ الْعُسْرِ يُسْرًا ﴾",
-                "﴿ فَاذْكُرُونِي أَذْكُرْكُمْ ﴾",
-                "﴿ هُدًى لِلْمُتَّقِينَ ﴾",
-                "﴿ وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا ﴾",
-                "﴿ إِنَّ هَذَا الْقُرآنَ يَهْدِي لِلَّتِي هِيَ أَقْوَمُ ﴾",
-                "﴿ وَرَحْمَتِي وَسِعَتْ كُلَّ شَيْءٍ ﴾",
-                "﴿ إِنَّ اللَّهَ غَفُورٌ رَحِيمٌ ﴾",
-                "﴿ قُلْ يَا عِبَادِيَ الَّذِينَ أَسْرَفُوا عَلَى أَنْفُسِهِمْ لَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ ﴾",
-                "﴿ رَبِّ اغْفِرْ وَارْحَمْ وَأَنْتَ خَيْرُ الرَّاحِمِينَ ﴾",
-                "﴿ اللَّهُ يَغْفِرُ الذُّنُوبَ جَمِيعًا ﴾",
-                "﴿ وَمَا يُلْقَاهَا إِلَّا الَّذِينَ صَبَرُوا ﴾",
-                "﴿ إِنَّ اللَّهَ مَعَ الصَّابِرِينَ ﴾",
-                "﴿ وَاصْبِرْ وَمَا صَبْرُكَ إِلَّا بِاللَّهِ ﴾",
-                "﴿ فَاسْتَعِينُوا بِالصَّبْرِ وَالصَّلَاةِ ﴾",
-                "﴿ رَبَّنَا أَفْرِغْ عَلَيْنَا صَبْرًا وَتَوَفَّنَا مُسْلِمِينَ ﴾",
-                "﴿ كُلُّ نَفْسٍ ذَائِقَةُ الْمَوْتِ ﴾",
-                "﴿ إِنَّ فِي خَلْقِ السَّمَاوَاتِ وَالْأَرْضِ لَآيَاتٍ لِلْمُؤْمِنِينَ ﴾",
-                "﴿ أَفَلَا يَنْظُرُونَ إِلَى الْإِبِلِ كَيْفَ خُلِقَتْ ﴾",
-                "﴿ أَفَلَا يَتَدَبَّرُونَ الْقُرآنَ ﴾",
-                "﴿ لَا إِلَهَ إِلَّا هُوَ عَلَيْهِ تَوَكَّلْتُ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ ﴾",
-                "﴿ إِنَّ عِبَادِي لَيْسَ لَكَ عَلَيْهِمْ سُلْطَانٌ ﴾",
-                "﴿ قُلْ هُوَ اللَّهُ أَحَدٌ ﴾",
-                "﴿ اللَّهُ لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ﴾",
-                "﴿ وَلِلَّهِ الْأَسْمَاءُ الْحُسْنَى فَادْعُوهُ بِهَا ﴾"
-            ];
-            let currentAyah = 0;
-            const ayahDiv = document.getElementById("ayah");
-
-            function changeAyah() {
-                if (!ayahDiv) return;
-                ayahDiv.style.opacity = 0;
-                setTimeout(() => {
-                    ayahDiv.innerHTML = "📖 " + ayat[currentAyah];
-                    ayahDiv.style.opacity = 1;
-                    currentAyah = (currentAyah + 1) % ayat.length;
-                }, 1500);
-            }
-            
-            if (ayat.length > 0) {
-                changeAyah();
-                setInterval(changeAyah, 10000);
-            }
-
-            /* ===== تسجيل Service Worker ===== */
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('service-worker.js')
-                    .then(() => console.log('Service Worker registered'))
-                    .catch((err) => console.log('Service Worker failed', err));
-            }
+function togglePlay(){
+    if(!playing){
+        if(!radio.src){
+            radio.src = "https://stream.radiojar.com/8s5u5tpdtwzuv";
+        }
+        radio.load();
+        radio.play().then(()=>{
+            notice.style.display = "none";
+        }).catch(()=>{
+            notice.style.display = "block";
         });
-    </script>
+
+        btn.innerHTML = "⏸️ إيقاف الإذاعة";
+        playing = true;
+    }else{
+        radio.pause();
+        btn.innerHTML = "▶️ تشغيل الإذاعة";
+        playing = false;
+    }
+}
+
+/* =====================================================
+   مؤقت النوم
+   ===================================================== */
+
+let sleepTimer = null;
+let sleepEndTime = null;
+
+const sleepTime = document.getElementById("sleepTime");
+const startTimerBtn = document.getElementById("startTimerBtn");
+const cancelTimerBtn = document.getElementById("cancelTimerBtn");
+const timerDisplay = document.getElementById("timerDisplay");
+
+
+function startSleepTimer(){
+
+    // إلغاء أي مؤقت سابق
+    if(sleepTimer){
+        clearInterval(sleepTimer);
+    }
+
+    const minutes = parseInt(sleepTime.value);
+
+    // حساب وقت انتهاء المؤقت
+    sleepEndTime = Date.now() + (minutes * 60 * 1000);
+
+    // إظهار حالة المؤقت
+    timerDisplay.style.display = "block";
+    cancelTimerBtn.style.display = "block";
+
+    startTimerBtn.innerHTML = "⏰ إعادة ضبط المؤقت";
+
+    updateSleepTimer();
+
+    sleepTimer = setInterval(updateSleepTimer,1000);
+}
+
+
+function updateSleepTimer(){
+
+    const remaining = sleepEndTime - Date.now();
+
+    if(remaining <= 0){
+
+        clearInterval(sleepTimer);
+        sleepTimer = null;
+
+        // إيقاف الإذاعة
+        radio.pause();
+
+        // إعادة حالة الزر
+        btn.innerHTML = "▶️ تشغيل الإذاعة";
+        playing = false;
+
+        // إخفاء المؤقت
+        timerDisplay.style.display = "none";
+        cancelTimerBtn.style.display = "none";
+
+        startTimerBtn.innerHTML = "⏰ تشغيل مؤقت النوم";
+
+        alert("⏰ انتهى مؤقت النوم وتم إيقاف الإذاعة.");
+
+        return;
+    }
+
+    const totalSeconds = Math.ceil(remaining / 1000);
+
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    let text = "⏰ متبقي: ";
+
+    if(hours > 0){
+        text += hours + " ساعة ";
+    }
+
+    text += String(minutes).padStart(2,"0");
+    text += ":";
+    text += String(seconds).padStart(2,"0");
+
+    timerDisplay.innerHTML = text;
+}
+
+
+function cancelSleepTimer(){
+
+    if(sleepTimer){
+        clearInterval(sleepTimer);
+        sleepTimer = null;
+    }
+
+    sleepEndTime = null;
+
+    timerDisplay.style.display = "none";
+    cancelTimerBtn.style.display = "none";
+
+    startTimerBtn.innerHTML = "⏰ تشغيل مؤقت النوم";
+}
+
+
+/* ===== نسخ الرابط ===== */
+const copyBtn = document.getElementById("copyBtn");
+const fbLink = document.getElementById("fbLink");
+
+copyBtn.addEventListener("click", () => {
+    navigator.clipboard.writeText(fbLink.href).then(() => {
+        copyBtn.innerText = "تم النسخ ✅";
+        setTimeout(() => { copyBtn.innerText = "نسخ الرابط"; }, 2000);
+    }).catch(() => {
+        alert("فشل النسخ، انسخ الرابط يدويًا");
+    });
+});
+
+
+/* ===== الآيات ===== */
+const ayat = [
+"﴿ أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ ﴾",
+"﴿ وَقُل رَّبِّ زِدْنِي عِلْمًا ﴾",
+"﴿ إِنَّ مَعَ الْعُسْرِ يُسْرًا ﴾",
+"﴿ فَاذْكُرُونِي أَذْكُرْكُمْ ﴾",
+"﴿ هُدًى لِلْمُتَّقِينَ ﴾",
+"﴿ وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا ﴾",
+"﴿ إِنَّ هَذَا الْقُرآنَ يَهْدِي لِلَّتِي هِيَ أَقْوَمُ ﴾",
+"﴿ وَرَحْمَتِي وَسِعَتْ كُلَّ شَيْءٍ ﴾",
+"﴿ إِنَّ اللَّهَ غَفُورٌ رَحِيمٌ ﴾",
+"﴿ قُلْ يَا عِبَادِيَ الَّذِينَ أَسْرَفُوا عَلَى أَنْفُسِهِمْ لَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ ﴾",
+"﴿ رَبِّ اغْفِرْ وَارْحَمْ وَأَنْتَ خَيْرُ الرَّاحِمِينَ ﴾",
+"﴿ اللَّهُ يَغْفِرُ الذُّنُوبَ جَمِيعًا ﴾",
+"﴿ وَمَا يُلْقَاهَا إِلَّا الَّذِينَ صَبَرُوا ﴾",
+"﴿ إِنَّ اللَّهَ مَعَ الصَّابِرِينَ ﴾",
+"﴿ وَاصْبِرْ وَمَا صَبْرُكَ إِلَّا بِاللَّهِ ﴾",
+"﴿ فَاسْتَعِينُوا بِالصَّبْرِ وَالصَّلَاةِ ﴾",
+"﴿ رَبَّنَا أَفْرِغْ عَلَيْنَا صَبْرًا وَتَوَفَّنَا مُسْلِمِينَ ﴾",
+"﴿ كُلُّ نَفْسٍ ذَائِقَةُ الْمَوْتِ ﴾",
+"﴿ إِنَّ فِي خَلْقِ السَّمَاوَاتِ وَالْأَرْضِ لَآيَاتٍ لِلْمُؤْمِنِينَ ﴾",
+"﴿ أَفَلَا يَنْظُرُونَ إِلَى الْإِبِلِ كَيْفَ خُلِقَتْ ﴾",
+"﴿ أَفَلَا يَتَدَبَّرُونَ الْقُرآنَ ﴾",
+"﴿ لَا إِلَهَ إِلَّا هُوَ عَلَيْهِ تَوَكَّلْتُ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ ﴾",
+"﴿ إِنَّ عِبَادِي لَيْسَ لَكَ عَلَيْهِمْ سُلْطَانٌ ﴾",
+"﴿ قُلْ هُوَ اللَّهُ أَحَدٌ ﴾",
+"﴿ اللَّهُ لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ﴾",
+"﴿ وَلِلَّهِ الْأَسْمَاءُ الْحُسْنَى فَادْعُوهُ بِهَا ﴾"
+];
+
+let currentAyah = 0;
+const ayahDiv = document.getElementById("ayah");
+
+function changeAyah(){
+    ayahDiv.style.opacity = 0;
+    setTimeout(()=>{
+        ayahDiv.innerHTML = "📖 " + ayat[currentAyah];
+        ayahDiv.style.opacity = 1;
+        currentAyah = (currentAyah + 1) % ayat.length;
+    },1500);
+}
+
+changeAyah();
+setInterval(changeAyah,10000);
+
+
+/* ===== تسجيل Service Worker ===== */
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js')
+  .then(() => console.log('Service Worker registered'))
+  .catch((err) => console.log('Service Worker failed', err));
+}
+</script>
+
 </body>
 </html>
