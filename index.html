@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -38,7 +39,6 @@ body{
     padding:20px;
 }
 
-/* باقي CSS بدون أي تغيير */
 .radio-box{
     max-width:420px;
     margin:30px auto;
@@ -87,15 +87,15 @@ button:active{
     background:#16a085;
 }
 
-/* ===== زر التثبيت ===== */
-#installBtn {
+/* ===== زر إضافة للشاشة الرئيسية ===== */
+#addHomeBtn {
     margin-top: 15px;
     background: #3498db;
     color: #fff;
-    display: none; /* مخفي لحين توفر إمكانية التثبيت */
+    display: none; /* مخفي افتراضياً لحين تحديد نوع الجهاز */
 }
 
-#installBtn:active {
+#addHomeBtn:active {
     background: #2980b9;
 }
 
@@ -211,8 +211,8 @@ button:active{
 
     <button id="playBtn" onclick="togglePlay()">▶️ تشغيل الإذاعة</button>
 
-    <!-- زر تثبيت التطبيق -->
-    <button id="installBtn">📱 تثبيت التطبيق</button>
+    <!-- زر إضافة للشاشة الرئيسية -->
+    <button id="addHomeBtn">📱 إضافة إلى الشاشة الرئيسية</button>
 
     <audio id="radio" preload="none" playsinline></audio>
 
@@ -249,6 +249,15 @@ button:active{
         <a id="fbLink" href="https://mahmoudhelal310-dotcom.github.io/quran-radio/" target="_blank">https://mahmoudhelal310-dotcom.github.io/quran-radio/</a>
         <br>
         <button id="copyBtn">نسخ الرابط</button>
+    </div>
+</div>
+
+<!-- نافذة تعليمات الآيفون -->
+<div id="iosGuideModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999; justify-content:center; align-items:center; text-align:center; padding:20px; box-sizing:border-box;">
+    <div style="background:#203a43; padding:20px; border-radius:15px; max-width:350px; color:white; border:1px solid #3498db;">
+        <h3 style="margin-top:0; color:#ffd700;">طريقة تثبيت التطبيق</h3>
+        <p id="guideText" style="font-size:15px; line-height:1.6; color:#fff;"></p>
+        <button onclick="closeGuide()" style="background:#e74c3c; color:white; padding:10px; width:100%; margin-top:10px; border-radius:8px; border:none; cursor:pointer;">حسناً، فهمت</button>
     </div>
 </div>
 
@@ -312,17 +321,14 @@ const timerDisplay = document.getElementById("timerDisplay");
 
 function startSleepTimer(){
 
-    // إلغاء أي مؤقت سابق
     if(sleepTimer){
         clearInterval(sleepTimer);
     }
 
     const minutes = parseInt(sleepTime.value);
 
-    // حساب وقت انتهاء المؤقت
     sleepEndTime = Date.now() + (minutes * 60 * 1000);
 
-    // إظهار حالة المؤقت
     timerDisplay.style.display = "block";
     cancelTimerBtn.style.display = "block";
 
@@ -343,14 +349,11 @@ function updateSleepTimer(){
         clearInterval(sleepTimer);
         sleepTimer = null;
 
-        // إيقاف الإذاعة
         radio.pause();
 
-        // إعادة حالة الزر
         btn.innerHTML = "▶️ تشغيل الإذاعة";
         playing = false;
 
-        // إخفاء المؤقت
         timerDisplay.style.display = "none";
         cancelTimerBtn.style.display = "none";
 
@@ -422,7 +425,7 @@ const ayat = [
 "﴿ إِنَّ هَذَا الْقُرآنَ يَهْدِي لِلَّتِي هِيَ أَقْوَمُ ﴾",
 "﴿ وَرَحْمَتِي وَسِعَتْ كُلَّ شَيْءٍ ﴾",
 "﴿ إِنَّ اللَّهَ غَفُورٌ رَحِيمٌ ﴾",
-"﴿ قُلْ يََا عِبَادِيَ الَّذِينَ أَسْرَفُوا عَلَى أَنْفُسِهِمْ لَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ ﴾",
+"﴿ قُلْ يَا عِبَادِيَ الَّذِينَ أَسْرَفُوا عَلَى أَنْفُسِهِمْ لَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ ﴾",
 "﴿ رَبِّ اغْفِرْ وَارْحَمْ وَأَنْتَ خَيْرُ الرَّاحِمِينَ ﴾",
 "﴿ اللَّهُ يَغْفِرُ الذُّنُوبَ جَمِيعًا ﴾",
 "﴿ وَمَا يُلْقَاهَا إِلَّا الَّذِينَ صَبَرُوا ﴾",
@@ -464,36 +467,48 @@ if ('serviceWorker' in navigator) {
   .catch((err) => console.log('Service Worker failed', err));
 }
 
-/* ===== تفعيل زر تثبيت التطبيق (PWA) ===== */
+
+/* ===== تفعيل زر إضافة الشاشة الرئيسية (يدعم أندرويد وآيفون) ===== */
 let deferredPrompt;
-const installBtn = document.getElementById('installBtn');
+const addHomeBtn = document.getElementById('addHomeBtn');
+const iosGuideModal = document.getElementById('iosGuideModal');
+const guideText = document.getElementById('guideText');
+
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+if (isIOS) {
+    addHomeBtn.style.display = 'block';
+    guideText.innerHTML = "لإضافة التطبيق إلى شاشة هاتفك:<br>1. اضغط على زر <b>المشاركة (Share)</b> أسفل المتصفح.<br>2. اختر <b>'إضافة إلى الشاشة الرئيسية' (Add to Home Screen)</b>.";
+}
 
 window.addEventListener('beforeinstallprompt', (e) => {
-    // منع ظهور نافذة التثبيت الافتراضية للمتصفح مؤقتاً
     e.preventDefault();
-    // حفظ الحدث لاستخدامه عند الضغط على الزر
     deferredPrompt = e;
-    // إظهار زر التثبيت للمستخدم
-    installBtn.style.display = 'block';
+    addHomeBtn.style.display = 'block';
 });
 
-installBtn.addEventListener('click', () => {
-    // إخفاء الزر بعد الضغط عليه
-    installBtn.style.display = 'none';
-    // إظهار نافذة التثبيت الرسمية
-    if (deferredPrompt) {
+addHomeBtn.addEventListener('click', () => {
+    if (isIOS) {
+        iosGuideModal.style.display = 'flex';
+    } else if (deferredPrompt) {
         deferredPrompt.prompt();
         deferredPrompt.userChoice.then((choiceResult) => {
             if (choiceResult.outcome === 'accepted') {
-                console.log('المستخدم وافق على تثبيت التطبيق');
-            } else {
-                console.log('المستخدم رفض تثبيت التطبيق');
+                console.log('تم قبول التثبيت');
             }
             deferredPrompt = null;
         });
+    } else {
+        alert("يمكنك تثبيت الموقع من إعدادات المتصفح لديك (اضغط على النقاط الثلاث واختر إضافة إلى الشاشة الرئيسية).");
     }
 });
+
+function closeGuide() {
+    iosGuideModal.style.display = 'none';
+}
 </script>
 
 </body>
 </html>
+
+```
