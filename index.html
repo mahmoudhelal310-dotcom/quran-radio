@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -87,12 +86,11 @@ button:active{
     background:#16a085;
 }
 
-/* ===== زر إضافة للشاشة الرئيسية ===== */
+/* ===== زر إضافة للشاشة الرئيسية (ظاهر دائماً لضمان عدم اختفائه) ===== */
 #addHomeBtn {
     margin-top: 15px;
     background: #3498db;
     color: #fff;
-    display: none; /* مخفي افتراضياً لحين تحديد نوع الجهاز */
 }
 
 #addHomeBtn:active {
@@ -252,8 +250,8 @@ button:active{
     </div>
 </div>
 
-<!-- نافذة تعليمات الآيفون -->
-<div id="iosGuideModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999; justify-content:center; align-items:center; text-align:center; padding:20px; box-sizing:border-box;">
+<!-- نافذة الإرشادات والتعليمات (تظهر للآيفون أو عند عدم التوفر التلقائي) -->
+<div id="guideModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999; justify-content:center; align-items:center; text-align:center; padding:20px; box-sizing:border-box;">
     <div style="background:#203a43; padding:20px; border-radius:15px; max-width:350px; color:white; border:1px solid #3498db;">
         <h3 style="margin-top:0; color:#ffd700;">طريقة تثبيت التطبيق</h3>
         <p id="guideText" style="font-size:15px; line-height:1.6; color:#fff;"></p>
@@ -468,47 +466,45 @@ if ('serviceWorker' in navigator) {
 }
 
 
-/* ===== تفعيل زر إضافة الشاشة الرئيسية (يدعم أندرويد وآيفون) ===== */
+/* ===== تفعيل زر إضافة الشاشة الرئيسية المضمون (يعمل دائماً) ===== */
 let deferredPrompt;
 const addHomeBtn = document.getElementById('addHomeBtn');
-const iosGuideModal = document.getElementById('iosGuideModal');
+const guideModal = document.getElementById('guideModal');
 const guideText = document.getElementById('guideText');
 
-const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-
-if (isIOS) {
-    addHomeBtn.style.display = 'block';
-    guideText.innerHTML = "لإضافة التطبيق إلى شاشة هاتفك:<br>1. اضغط على زر <b>المشاركة (Share)</b> أسفل المتصفح.<br>2. اختر <b>'إضافة إلى الشاشة الرئيسية' (Add to Home Screen)</b>.";
-}
-
+// التقاط حدث التثبيت التلقائي لو المتصفح دعمه في الخلفية
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    addHomeBtn.style.display = 'block';
 });
 
 addHomeBtn.addEventListener('click', () => {
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
     if (isIOS) {
-        iosGuideModal.style.display = 'flex';
+        // إرشادات آيفون
+        guideText.innerHTML = "لإضافة التطبيق إلى شاشة هاتفك:<br>1. اضغط على زر <b>المشاركة (Share)</b> أسفل متصفح Safari.<br>2. انزل لأسفل القائمة واختر <b>'إضافة إلى الشاشة الرئيسية' (Add to Home Screen)</b>.";
+        guideModal.style.display = 'flex';
     } else if (deferredPrompt) {
+        // التثبيت الفوري لأندرويد
         deferredPrompt.prompt();
         deferredPrompt.userChoice.then((choiceResult) => {
             if (choiceResult.outcome === 'accepted') {
-                console.log('تم قبول التثبيت');
+                console.log('تم التثبيت بنجاح');
             }
             deferredPrompt = null;
         });
     } else {
-        alert("يمكنك تثبيت الموقع من إعدادات المتصفح لديك (اضغط على النقاط الثلاث واختر إضافة إلى الشاشة الرئيسية).");
+        // إرشادات عامة لأي متصفح أو جهاز آخر لا يدعم التثبيت المباشر بالزر
+        guideText.innerHTML = "يمكنك تثبيت الموقع بسهولة:<br>اضغط على <b>النقاط الثلاث</b> أعلى متصفحك، ثم اختر <b>'إضافة إلى الشاشة الرئيسية'</b> أو <b>'تثبيت التطبيق'</b>.";
+        guideModal.style.display = 'flex';
     }
 });
 
 function closeGuide() {
-    iosGuideModal.style.display = 'none';
+    guideModal.style.display = 'none';
 }
 </script>
 
 </body>
 </html>
-
-```
