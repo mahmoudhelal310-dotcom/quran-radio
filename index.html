@@ -27,53 +27,52 @@ body{
     background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
     color:white;
     padding:10px;
-    height: 100vh;
+    min-height: 100vh;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow: hidden; /* منع التمرير نهائياً */
 }
 
 .radio-box{
     width: 100%;
-    max-width: 380px;
+    max-width: 400px;
     background: rgba(0,0,0,0.5);
-    padding: 15px 20px;
-    border-radius: 15px;
+    padding: 20px;
+    border-radius: 18px;
     text-align: center;
 }
 
 .creator{
-    font-size: 14px;
+    font-size: 16px;
     color: #ffd700;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 }
 
 .radio-icon{
-    font-size: 40px;
-    margin-bottom: 5px;
+    font-size: 50px;
+    margin-bottom: 10px;
 }
 
 h1{
-    font-size: 20px;
-    margin: 5px 0;
+    font-size: 24px;
+    margin: 8px 0;
 }
 
 p{
-    font-size: 13px;
-    margin: 0 0 10px 0;
+    font-size: 15px;
+    margin: 0 0 15px 0;
 }
 
-/* زر التشغيل وزر التثبيت بحجم أصغر ومناسب */
+/* الأزرار بحجم متوازن ومريح */
 button{
     width: 100%;
-    padding: 10px;
-    font-size: 16px;
+    padding: 14px;
+    font-size: 18px;
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
     background: #1abc9c;
     color: #000;
     cursor: pointer;
@@ -85,70 +84,73 @@ button:active{
 }
 
 #addHomeBtn {
-    margin-top: 8px;
+    margin-top: 10px;
     background: #3498db;
     color: #fff;
-    padding: 8px;
-    font-size: 14px;
-    display: none; /* يظهر تلقائياً لو متاح */
+    padding: 14px;
+    font-size: 18px;
 }
 
-/* ===== مؤقت النوم - مصغر ===== */
+#addHomeBtn:active {
+    background: #2980b9;
+}
+
+/* ===== مؤقت النوم ===== */
 #sleepTimerBox{
-    margin-top: 8px;
-    padding: 6px 8px;
+    margin-top: 10px;
+    padding: 8px 10px;
     background: rgba(255,255,255,0.10);
-    border-radius: 8px;
+    border-radius: 10px;
 }
 
 #sleepTimerBox label{
     display: block;
-    font-size: 13px;
-    margin-bottom: 4px;
+    font-size: 14px;
+    margin-bottom: 6px;
     font-weight: bold;
 }
 
 #sleepTime{
     width: 100%;
-    padding: 5px;
-    font-size: 12px;
+    padding: 8px;
+    font-size: 14px;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     text-align: center;
     background: #fff;
     color: #222;
 }
 
 #startTimerBtn{
-    margin-top: 5px;
-    padding: 6px;
-    font-size: 13px;
+    margin-top: 6px;
+    padding: 10px;
+    font-size: 15px;
     background: #f1c40f;
 }
 
 #cancelTimerBtn{
-    margin-top: 4px;
-    padding: 5px;
-    font-size: 12px;
+    margin-top: 5px;
+    padding: 8px;
+    font-size: 13px;
     background: #e74c3c;
     color: white;
     display: none;
 }
 
 #timerDisplay{
-    margin-top: 4px;
-    font-size: 13px;
+    margin-top: 6px;
+    font-size: 15px;
     font-weight: bold;
     color: #ffd700;
     display: none;
 }
 
 #ayah{
-    margin: 10px auto;
-    padding: 8px;
-    max-width: 380px;
+    margin: 12px auto;
+    padding: 10px;
+    max-width: 400px;
     text-align: center;
-    font-size: 14px;
+    font-size: 16px;
     background: #f1f8e9;
     color: #2e7d32;
     border-radius: 8px;
@@ -159,20 +161,20 @@ button:active{
 
 #fbNotice{
     display: none;
-    margin-top: 8px;
-    padding: 8px;
+    margin-top: 10px;
+    padding: 10px;
     background: #fff3cd;
     color: #000;
     border-radius: 8px;
-    font-size: 12px;
+    font-size: 13px;
     text-align: center;
     word-break: break-word;
 }
 
 #fbNotice a{
     display: block;
-    margin-top: 4px;
-    padding: 5px;
+    margin-top: 6px;
+    padding: 6px;
     background: #1abc9c;
     color: #000;
     text-decoration: none;
@@ -182,15 +184,15 @@ button:active{
 
 #copyBtn{
     display: inline-block;
-    margin-top: 4px;
-    padding: 5px 10px;
+    margin-top: 6px;
+    padding: 6px 12px;
     background: #1abc9c;
     color: #000;
     border: none;
     border-radius: 6px;
     font-weight: bold;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 13px;
 }
 </style>
 </head>
@@ -205,8 +207,8 @@ button:active{
 
     <button id="playBtn" onclick="togglePlay()">▶️ تشغيل الإذاعة</button>
 
-    <!-- زر تثبيت التطبيق المصغر -->
-    <button id="addHomeBtn">📱 تثبيت التطبيق</button>
+    <!-- زر إضافة للشاشة الرئيسية (ظاهر دائماً وبحجم مناسب) -->
+    <button id="addHomeBtn">📱 إضافة إلى الشاشة الرئيسية</button>
 
     <audio id="radio" preload="none" playsinline></audio>
 
@@ -220,28 +222,38 @@ button:active{
             <option value="60">60 دقيقة</option>
             <option value="90">90 دقيقة</option>
         </select>
-        <button id="startTimerBtn" onclick="startSleepTimer()">⏰ تشغيل المؤقت</button>
-        <button id="cancelTimerBtn" onclick="cancelSleepTimer()">❌ إلغاء</button>
+        <button id="startTimerBtn" onclick="startSleepTimer()">⏰ تشغيل مؤقت النوم</button>
+        <button id="cancelTimerBtn" onclick="cancelSleepTimer()">❌ إلغاء المؤقت</button>
         <div id="timerDisplay"></div>
     </div>
 
     <!-- رسالة فيسبوك -->
     <div id="fbNotice">
-        🔊 لم يعمل الصوت؟ افتحه بمتصفح خارجي:
+        🔊 إذا لم يعمل الصوت داخل فيسبوك  
+        🌐 انسخ الرابط وافتحه في أي متصفح:
         <a id="fbLink" href="https://mahmoudhelal310-dotcom.github.io/quran-radio/" target="_blank">رابط الإذاعة</a>
         <button id="copyBtn">نسخ الرابط</button>
     </div>
 </div>
 
+<!-- نافذة الإرشادات والتعليمات (للأجهزة التي لا تدعم التثبيت المباشر) -->
+<div id="guideModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999; justify-content:center; align-items:center; text-align:center; padding:20px; box-sizing:border-box;">
+    <div style="background:#203a43; padding:20px; border-radius:15px; max-width:350px; color:white; border:1px solid #3498db;">
+        <h3 style="margin-top:0; color:#ffd700;">طريقة تثبيت التطبيق</h3>
+        <p id="guideText" style="font-size:15px; line-height:1.6; color:#fff;"></p>
+        <button onclick="closeGuide()" style="background:#e74c3c; color:white; padding:12px; width:100%; margin-top:10px; border-radius:8px; border:none; cursor:pointer; font-size:16px;">حسناً، فهمت</button>
+    </div>
+</div>
+
 <div style="
-  margin: 8px auto 0 auto;
-  padding: 6px;
-  max-width: 380px;
+  margin: 10px auto 0 auto;
+  padding: 8px;
+  max-width: 400px;
   border: 1px solid #c8e6c9;
   background: #f1f8e9;
-  border-radius: 6px;
+  border-radius: 8px;
   text-align: center;
-  font-size: 13px;
+  font-size: 15px;
   color: #2e7d32;
   font-weight: bold;
 ">
@@ -292,7 +304,7 @@ function startSleepTimer(){
     sleepEndTime = Date.now() + (minutes * 60 * 1000);
     timerDisplay.style.display = "block";
     cancelTimerBtn.style.display = "block";
-    startTimerBtn.innerHTML = "⏰ إعادة ضبط";
+    startTimerBtn.innerHTML = "⏰ إعادة ضبط المؤقت";
     updateSleepTimer();
     sleepTimer = setInterval(updateSleepTimer,1000);
 }
@@ -307,7 +319,7 @@ function updateSleepTimer(){
         playing = false;
         timerDisplay.style.display = "none";
         cancelTimerBtn.style.display = "none";
-        startTimerBtn.innerHTML = "⏰ تشغيل المؤقت";
+        startTimerBtn.innerHTML = "⏰ تشغيل مؤقت النوم";
         alert("⏰ انتهى مؤقت النوم وتم إيقاف الإذاعة.");
         return;
     }
@@ -316,7 +328,7 @@ function updateSleepTimer(){
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
     let text = "⏰ متبقي: ";
-    if(hours > 0){ text += hours + " س "; }
+    if(hours > 0){ text += hours + " ساعة "; }
     text += String(minutes).padStart(2,"0") + ":" + String(seconds).padStart(2,"0");
     timerDisplay.innerHTML = text;
 }
@@ -326,7 +338,7 @@ function cancelSleepTimer(){
     sleepEndTime = null;
     timerDisplay.style.display = "none";
     cancelTimerBtn.style.display = "none";
-    startTimerBtn.innerHTML = "⏰ تشغيل المؤقت";
+    startTimerBtn.innerHTML = "⏰ تشغيل مؤقت النوم";
 }
 
 /* ===== نسخ الرابط ===== */
@@ -334,7 +346,7 @@ const copyBtn = document.getElementById("copyBtn");
 const fbLink = document.getElementById("fbLink");
 copyBtn.addEventListener("click", () => {
     navigator.clipboard.writeText(fbLink.href).then(() => {
-        copyBtn.innerText = "تم ✅";
+        copyBtn.innerText = "تم النسخ ✅";
         setTimeout(() => { copyBtn.innerText = "نسخ الرابط"; }, 2000);
     });
 });
@@ -361,37 +373,51 @@ function changeAyah(){
         ayahDiv.innerHTML = "📖 " + ayat[currentAyah];
         ayahDiv.style.opacity = 1;
         currentAyah = (currentAyah + 1) % ayat.length;
-    },1000);
+    },1500);
 }
 
 changeAyah();
-setInterval(changeAyah,8000);
+setInterval(changeAyah,10000);
 
-/* ===== تسجيل Service Worker وتثبيت التطبيق ===== */
+/* ===== تسجيل Service Worker ===== */
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('service-worker.js');
 }
 
+/* ===== تفعيل زر إضافة الشاشة الرئيسية المضمون ===== */
 let deferredPrompt;
 const addHomeBtn = document.getElementById('addHomeBtn');
+const guideModal = document.getElementById('guideModal');
+const guideText = document.getElementById('guideText');
 
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    addHomeBtn.style.display = 'block'; // يظهر الزر تلقائياً وبشكل مباشر
 });
 
 addHomeBtn.addEventListener('click', () => {
-    if (deferredPrompt) {
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+    if (isIOS) {
+        guideText.innerHTML = "لإضافة التطبيق إلى شاشة هاتفك:<br>1. اضغط على زر <b>المشاركة (Share)</b> أسفل المتصفح.<br>2. اختر <b>'إضافة إلى الشاشة الرئيسية' (Add to Home Screen)</b>.";
+        guideModal.style.display = 'flex';
+    } else if (deferredPrompt) {
         deferredPrompt.prompt();
         deferredPrompt.userChoice.then((choiceResult) => {
             if (choiceResult.outcome === 'accepted') {
-                addHomeBtn.style.display = 'none';
+                console.log('تم التثبيت');
             }
             deferredPrompt = null;
         });
+    } else {
+        guideText.innerHTML = "لتثبيت التطبيق:<br>اضغط على <b>النقاط الثلاث</b> أعلى المتصفح، ثم اختر <b>'تثبيت التطبيق'</b> أو <b>'إضافة إلى الشاشة الرئيسية'</b>.";
+        guideModal.style.display = 'flex';
     }
 });
+
+function closeGuide() {
+    guideModal.style.display = 'none';
+}
 </script>
 
 </body>
