@@ -8,8 +8,17 @@
 <!-- Favicon -->
 <link rel="icon" href="favicon.png" type="image/png">
 
-<!-- PWA Manifest خارجي -->
-<link rel="manifest" href="manifest.json">
+<!-- PWA Manifest مباشر مع description -->
+<link rel="manifest" href="data:application/manifest+json,{
+  \"name\": \"إذاعة القرآن الكريم\",
+  \"short_name\": \"Quran Radio\",
+  \"description\": \"استمع إلى تلاوات عطرة من كتاب الله الكريم مع إذاعة القرآن الكريم.\",
+  \"start_url\": \"/\",
+  \"display\": \"standalone\",
+  \"background_color\": \"#0f2027\",
+  \"theme_color\": \"#0b2e2f\",
+  \"icons\": [{\"src\": \"favicon.png\", \"sizes\": \"64x64\", \"type\": \"image/png\"}]
+}">
 
 <!-- ===== Google Analytics ===== -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-91HP8NVXK5"></script>
@@ -26,173 +35,156 @@ body{
     font-family: Tahoma, Arial;
     background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
     color:white;
-    padding:10px;
-    min-height: 100vh;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    padding:20px;
 }
 
+/* باقي CSS بدون أي تغيير */
 .radio-box{
-    width: 100%;
-    max-width: 400px;
+    max-width:420px;
+    margin:30px auto;
     background: rgba(0,0,0,0.5);
-    padding: 20px;
-    border-radius: 18px;
-    text-align: center;
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
 }
 
 .creator{
-    font-size: 16px;
-    color: #ffd700;
-    font-weight: bold;
-    margin-bottom: 8px;
+    font-size:18px;
+    color:#ffd700;
+    font-weight:bold;
+    letter-spacing:1px;
+    text-shadow: 1px 1px 2px #000;
+    margin-bottom:15px;
 }
 
 .radio-icon{
-    font-size: 50px;
-    margin-bottom: 10px;
+    font-size:60px;
+    margin-bottom:15px;
 }
 
 h1{
-    font-size: 24px;
-    margin: 8px 0;
+    font-size:26px;
+    margin-bottom:15px;
 }
 
 p{
-    font-size: 15px;
-    margin: 0 0 15px 0;
+    font-size:16px;
+    margin-bottom:20px;
 }
 
-/* الأزرار بحجم متوازن ومريح */
 button{
-    width: 100%;
-    padding: 14px;
-    font-size: 18px;
-    border: none;
-    border-radius: 12px;
-    background: #1abc9c;
-    color: #000;
-    cursor: pointer;
-    font-weight: bold;
+    width:100%;
+    padding:18px;
+    font-size:20px;
+    border:none;
+    border-radius:15px;
+    background:#1abc9c;
+    color:#000;
+    cursor:pointer;
 }
 
 button:active{
-    background: #16a085;
+    background:#16a085;
 }
 
-#addHomeBtn {
-    margin-top: 10px;
-    background: #3498db;
-    color: #fff;
-    padding: 14px;
-    font-size: 18px;
-}
-
-#addHomeBtn:active {
-    background: #2980b9;
-}
-
-/* ===== مؤقت النوم ===== */
+/* ===== مؤقت النوم - مساحة أصغر ===== */
 #sleepTimerBox{
-    margin-top: 10px;
-    padding: 8px 10px;
-    background: rgba(255,255,255,0.10);
-    border-radius: 10px;
+    margin-top:10px;
+    padding:8px 10px;
+    background:rgba(255,255,255,0.10);
+    border-radius:10px;
 }
 
 #sleepTimerBox label{
-    display: block;
-    font-size: 14px;
-    margin-bottom: 6px;
-    font-weight: bold;
+    display:block;
+    font-size:15px;
+    margin-bottom:6px;
+    font-weight:bold;
 }
 
 #sleepTime{
-    width: 100%;
-    padding: 8px;
-    font-size: 14px;
-    border: none;
-    border-radius: 8px;
-    text-align: center;
-    background: #fff;
-    color: #222;
+    width:100%;
+    padding:7px;
+    font-size:14px;
+    border:none;
+    border-radius:7px;
+    box-sizing:border-box;
+    text-align:center;
+    background:#fff;
+    color:#222;
 }
 
 #startTimerBtn{
-    margin-top: 6px;
-    padding: 10px;
-    font-size: 15px;
-    background: #f1c40f;
+    margin-top:6px;
+    padding:8px;
+    font-size:14px;
+    background:#f1c40f;
 }
 
 #cancelTimerBtn{
-    margin-top: 5px;
-    padding: 8px;
-    font-size: 13px;
-    background: #e74c3c;
-    color: white;
-    display: none;
+    margin-top:5px;
+    padding:7px;
+    font-size:13px;
+    background:#e74c3c;
+    color:white;
+    display:none;
 }
 
 #timerDisplay{
-    margin-top: 6px;
-    font-size: 15px;
-    font-weight: bold;
-    color: #ffd700;
-    display: none;
+    margin-top:7px;
+    font-size:16px;
+    font-weight:bold;
+    color:#ffd700;
+    display:none;
 }
 
 #ayah{
-    margin: 12px auto;
-    padding: 10px;
-    max-width: 400px;
-    text-align: center;
-    font-size: 16px;
-    background: #f1f8e9;
-    color: #2e7d32;
-    border-radius: 8px;
-    font-weight: bold;
-    opacity: 0;
+    margin:25px auto;
+    padding:15px;
+    max-width:600px;
+    text-align:center;
+    font-size:18px;
+    background:#f1f8e9;
+    color:#2e7d32;
+    border-radius:10px;
+    font-weight:bold;
+    opacity:0;
     transition: opacity 1.5s ease-in-out;
 }
 
 #fbNotice{
-    display: none;
-    margin-top: 10px;
-    padding: 10px;
-    background: #fff3cd;
-    color: #000;
-    border-radius: 8px;
-    font-size: 13px;
-    text-align: center;
-    word-break: break-word;
+    display:none;
+    margin-top:15px;
+    padding:12px;
+    background:#fff3cd;
+    color:#000;
+    border-radius:10px;
+    font-size:14px;
+    text-align:center;
+    word-break:break-word;
 }
 
 #fbNotice a{
-    display: block;
-    margin-top: 6px;
-    padding: 6px;
-    background: #1abc9c;
-    color: #000;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: bold;
+    display:block;
+    margin-top:8px;
+    padding:8px;
+    background:#1abc9c;
+    color:#000;
+    text-decoration:none;
+    border-radius:8px;
+    font-weight:bold;
 }
 
 #copyBtn{
-    display: inline-block;
-    margin-top: 6px;
-    padding: 6px 12px;
-    background: #1abc9c;
-    color: #000;
-    border: none;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 13px;
+    display:inline-block;
+    margin-top:8px;
+    padding:8px 16px;
+    background:#1abc9c;
+    color:#000;
+    border:none;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
 }
 </style>
 </head>
@@ -207,14 +199,13 @@ button:active{
 
     <button id="playBtn" onclick="togglePlay()">▶️ تشغيل الإذاعة</button>
 
-    <!-- زر إضافة للشاشة الرئيسية (ظاهر دائماً وبحجم مناسب) -->
-    <button id="addHomeBtn">📱 إضافة إلى الشاشة الرئيسية</button>
-
     <audio id="radio" preload="none" playsinline></audio>
 
     <!-- ===== مؤقت النوم ===== -->
     <div id="sleepTimerBox">
+
         <label>⏰ مؤقت النوم</label>
+
         <select id="sleepTime">
             <option value="15">15 دقيقة</option>
             <option value="30">30 دقيقة</option>
@@ -222,40 +213,41 @@ button:active{
             <option value="60">60 دقيقة</option>
             <option value="90">90 دقيقة</option>
         </select>
-        <button id="startTimerBtn" onclick="startSleepTimer()">⏰ تشغيل مؤقت النوم</button>
-        <button id="cancelTimerBtn" onclick="cancelSleepTimer()">❌ إلغاء المؤقت</button>
+
+        <button id="startTimerBtn" onclick="startSleepTimer()">
+            ⏰ تشغيل مؤقت النوم
+        </button>
+
+        <button id="cancelTimerBtn" onclick="cancelSleepTimer()">
+            ❌ إلغاء المؤقت
+        </button>
+
         <div id="timerDisplay"></div>
+
     </div>
 
-    <!-- رسالة فيسبوك -->
+    <!-- رسالة فيسبوك + رابط + زر نسخ -->
     <div id="fbNotice">
         🔊 إذا لم يعمل الصوت داخل فيسبوك  
         🌐 انسخ الرابط وافتحه في أي متصفح:
-        <a id="fbLink" href="https://mahmoudhelal310-dotcom.github.io/quran-radio/" target="_blank">رابط الإذاعة</a>
+        <br>
+        <a id="fbLink" href="https://mahmoudhelal310-dotcom.github.io/quran-radio/" target="_blank">https://mahmoudhelal310-dotcom.github.io/quran-radio/</a>
+        <br>
         <button id="copyBtn">نسخ الرابط</button>
     </div>
 </div>
 
-<!-- نافذة الإرشادات والتعليمات (للأجهزة التي لا تدعم التثبيت المباشر) -->
-<div id="guideModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999; justify-content:center; align-items:center; text-align:center; padding:20px; box-sizing:border-box;">
-    <div style="background:#203a43; padding:20px; border-radius:15px; max-width:350px; color:white; border:1px solid #3498db;">
-        <h3 style="margin-top:0; color:#ffd700;">طريقة تثبيت التطبيق</h3>
-        <p id="guideText" style="font-size:15px; line-height:1.6; color:#fff;"></p>
-        <button onclick="closeGuide()" style="background:#e74c3c; color:white; padding:12px; width:100%; margin-top:10px; border-radius:8px; border:none; cursor:pointer; font-size:16px;">حسناً، فهمت</button>
-    </div>
-</div>
-
 <div style="
-  margin: 10px auto 0 auto;
-  padding: 8px;
-  max-width: 400px;
-  border: 1px solid #c8e6c9;
-  background: #f1f8e9;
-  border-radius: 8px;
-  text-align: center;
-  font-size: 15px;
-  color: #2e7d32;
-  font-weight: bold;
+  margin:30px auto;
+  padding:12px;
+  max-width:500px;
+  border:1px solid #c8e6c9;
+  background:#f1f8e9;
+  border-radius:8px;
+  text-align:center;
+  font-size:18px;
+  color:#2e7d32;
+  font-weight:bold;
 ">
 🌿 صدقة جارية — لا تنسونا من صالح دعائكم
 </div>
@@ -290,66 +282,119 @@ function togglePlay(){
     }
 }
 
-/* ===== مؤقت النوم ===== */
+/* =====================================================
+   مؤقت النوم
+   ===================================================== */
+
 let sleepTimer = null;
 let sleepEndTime = null;
+
 const sleepTime = document.getElementById("sleepTime");
 const startTimerBtn = document.getElementById("startTimerBtn");
 const cancelTimerBtn = document.getElementById("cancelTimerBtn");
 const timerDisplay = document.getElementById("timerDisplay");
 
+
 function startSleepTimer(){
-    if(sleepTimer){ clearInterval(sleepTimer); }
+
+    // إلغاء أي مؤقت سابق
+    if(sleepTimer){
+        clearInterval(sleepTimer);
+    }
+
     const minutes = parseInt(sleepTime.value);
+
+    // حساب وقت انتهاء المؤقت
     sleepEndTime = Date.now() + (minutes * 60 * 1000);
+
+    // إظهار حالة المؤقت
     timerDisplay.style.display = "block";
     cancelTimerBtn.style.display = "block";
+
     startTimerBtn.innerHTML = "⏰ إعادة ضبط المؤقت";
+
     updateSleepTimer();
+
     sleepTimer = setInterval(updateSleepTimer,1000);
 }
 
+
 function updateSleepTimer(){
+
     const remaining = sleepEndTime - Date.now();
+
     if(remaining <= 0){
+
         clearInterval(sleepTimer);
         sleepTimer = null;
+
+        // إيقاف الإذاعة
         radio.pause();
+
+        // إعادة حالة الزر
         btn.innerHTML = "▶️ تشغيل الإذاعة";
         playing = false;
+
+        // إخفاء المؤقت
         timerDisplay.style.display = "none";
         cancelTimerBtn.style.display = "none";
+
         startTimerBtn.innerHTML = "⏰ تشغيل مؤقت النوم";
+
         alert("⏰ انتهى مؤقت النوم وتم إيقاف الإذاعة.");
+
         return;
     }
+
     const totalSeconds = Math.ceil(remaining / 1000);
+
     const hours = Math.floor(totalSeconds / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
+
     let text = "⏰ متبقي: ";
-    if(hours > 0){ text += hours + " ساعة "; }
-    text += String(minutes).padStart(2,"0") + ":" + String(seconds).padStart(2,"0");
+
+    if(hours > 0){
+        text += hours + " ساعة ";
+    }
+
+    text += String(minutes).padStart(2,"0");
+    text += ":";
+    text += String(seconds).padStart(2,"0");
+
     timerDisplay.innerHTML = text;
 }
 
+
 function cancelSleepTimer(){
-    if(sleepTimer){ clearInterval(sleepTimer); sleepTimer = null; }
+
+    if(sleepTimer){
+        clearInterval(sleepTimer);
+        sleepTimer = null;
+    }
+
     sleepEndTime = null;
+
     timerDisplay.style.display = "none";
     cancelTimerBtn.style.display = "none";
+
     startTimerBtn.innerHTML = "⏰ تشغيل مؤقت النوم";
 }
+
 
 /* ===== نسخ الرابط ===== */
 const copyBtn = document.getElementById("copyBtn");
 const fbLink = document.getElementById("fbLink");
+
 copyBtn.addEventListener("click", () => {
     navigator.clipboard.writeText(fbLink.href).then(() => {
         copyBtn.innerText = "تم النسخ ✅";
         setTimeout(() => { copyBtn.innerText = "نسخ الرابط"; }, 2000);
+    }).catch(() => {
+        alert("فشل النسخ، انسخ الرابط يدويًا");
     });
 });
+
 
 /* ===== الآيات ===== */
 const ayat = [
@@ -361,7 +406,24 @@ const ayat = [
 "﴿ وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا ﴾",
 "﴿ إِنَّ هَذَا الْقُرآنَ يَهْدِي لِلَّتِي هِيَ أَقْوَمُ ﴾",
 "﴿ وَرَحْمَتِي وَسِعَتْ كُلَّ شَيْءٍ ﴾",
-"﴿ إِنَّ اللَّهَ غَفُورٌ رَحِيمٌ ﴾"
+"﴿ إِنَّ اللَّهَ غَفُورٌ رَحِيمٌ ﴾",
+"﴿ قُلْ يَا عِبَادِيَ الَّذِينَ أَسْرَفُوا عَلَى أَنْفُسِهِمْ لَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ ﴾",
+"﴿ رَبِّ اغْفِرْ وَارْحَمْ وَأَنْتَ خَيْرُ الرَّاحِمِينَ ﴾",
+"﴿ اللَّهُ يَغْفِرُ الذُّنُوبَ جَمِيعًا ﴾",
+"﴿ وَمَا يُلْقَاهَا إِلَّا الَّذِينَ صَبَرُوا ﴾",
+"﴿ إِنَّ اللَّهَ مَعَ الصَّابِرِينَ ﴾",
+"﴿ وَاصْبِرْ وَمَا صَبْرُكَ إِلَّا بِاللَّهِ ﴾",
+"﴿ فَاسْتَعِينُوا بِالصَّبْرِ وَالصَّلَاةِ ﴾",
+"﴿ رَبَّنَا أَفْرِغْ عَلَيْنَا صَبْرًا وَتَوَفَّنَا مُسْلِمِينَ ﴾",
+"﴿ كُلُّ نَفْسٍ ذَائِقَةُ الْمَوْتِ ﴾",
+"﴿ إِنَّ فِي خَلْقِ السَّمَاوَاتِ وَالْأَرْضِ لَآيَاتٍ لِلْمُؤْمِنِينَ ﴾",
+"﴿ أَفَلَا يَنْظُرُونَ إِلَى الْإِبِلِ كَيْفَ خُلِقَتْ ﴾",
+"﴿ أَفَلَا يَتَدَبَّرُونَ الْقُرآنَ ﴾",
+"﴿ لَا إِلَهَ إِلَّا هُوَ عَلَيْهِ تَوَكَّلْتُ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ ﴾",
+"﴿ إِنَّ عِبَادِي لَيْسَ لَكَ عَلَيْهِمْ سُلْطَانٌ ﴾",
+"﴿ قُلْ هُوَ اللَّهُ أَحَدٌ ﴾",
+"﴿ اللَّهُ لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ﴾",
+"﴿ وَلِلَّهِ الْأَسْمَاءُ الْحُسْنَى فَادْعُوهُ بِهَا ﴾"
 ];
 
 let currentAyah = 0;
@@ -379,44 +441,12 @@ function changeAyah(){
 changeAyah();
 setInterval(changeAyah,10000);
 
+
 /* ===== تسجيل Service Worker ===== */
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js');
-}
-
-/* ===== تفعيل زر إضافة الشاشة الرئيسية المضمون ===== */
-let deferredPrompt;
-const addHomeBtn = document.getElementById('addHomeBtn');
-const guideModal = document.getElementById('guideModal');
-const guideText = document.getElementById('guideText');
-
-window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-});
-
-addHomeBtn.addEventListener('click', () => {
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-
-    if (isIOS) {
-        guideText.innerHTML = "لإضافة التطبيق إلى شاشة هاتفك:<br>1. اضغط على زر <b>المشاركة (Share)</b> أسفل المتصفح.<br>2. اختر <b>'إضافة إلى الشاشة الرئيسية' (Add to Home Screen)</b>.";
-        guideModal.style.display = 'flex';
-    } else if (deferredPrompt) {
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-                console.log('تم التثبيت');
-            }
-            deferredPrompt = null;
-        });
-    } else {
-        guideText.innerHTML = "لتثبيت التطبيق:<br>اضغط على <b>النقاط الثلاث</b> أعلى المتصفح، ثم اختر <b>'تثبيت التطبيق'</b> أو <b>'إضافة إلى الشاشة الرئيسية'</b>.";
-        guideModal.style.display = 'flex';
-    }
-});
-
-function closeGuide() {
-    guideModal.style.display = 'none';
+  navigator.serviceWorker.register('service-worker.js')
+  .then(() => console.log('Service Worker registered'))
+  .catch((err) => console.log('Service Worker failed', err));
 }
 </script>
 
